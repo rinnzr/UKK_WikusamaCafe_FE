@@ -25,7 +25,7 @@ module.exports = {
           key: `id_menu`
         }
       },
-      harga_: {
+      harga: {
         type: Sequelize.DOUBLE
       },
       jumlah: {

@@ -6,4 +6,4 @@ npx sequelize-cli model:create --name user --attributes nama_user:string,role:en
 
 npx sequelize-cli model:create --name transaksi --attributes tgl_transaksi:date,id_user:integer,id_meja:integer,nama_pelanggan:string,status:enum:'{belum_bayar,lunas}'
 
-npx sequelize-cli model:create --name detail_transaksi --attributes id_transaksi:integer,id_menu:integer,harga_:double,jumlah:integer
+npx sequelize-cli model:create --name detail_transaksi --attributes id_transaksi:integer,id_menu:integer,harga:double,jumlah:integer
