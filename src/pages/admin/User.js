@@ -135,8 +135,8 @@ function User() {
   };
 
   return (
-    <div className=" mx-32  sm:p-4 text-[Poppins] ">
-      <div className="overflow-x-auto">
+    <div className=" flex sm:p-7 w-full ">
+      <div className="w-full h-screen mx-10 ml-60">
         {/* title */}
         <h1 className="flex justify-center font-medium text-5xl">User List</h1>
 

@@ -146,10 +146,10 @@ export default class Meja extends React.Component {
 
   render() {
     return (
-      <div className='flex h-screen w-full'>
-        <div className="w-full h-screen mx-28">
+      <div className='flex sm:p-7 w-full'>
+        <div className="w-full h-screen mx-10 ml-60">
           {/* <Sidebar /> */}
-          <div className=" mt-5 overflow-x-auto sm:rounded-lg">
+          <div className=" overflow-x-auto sm:rounded-lg">
           <h1 className="flex justify-center font-medium text-5xl">Meja List</h1>
               <button className="hover:bg-green-500 float-right bg-green-600 text-white font-bold uppercase text-sm px-4 py-3 mb-2 rounded-md outline-none ease-linear transition-all duration-150" type="button" onClick={() => this.Add()}>
                 Tambah Meja

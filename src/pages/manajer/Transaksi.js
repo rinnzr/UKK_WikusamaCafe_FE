@@ -3,28 +3,89 @@ import axios from "axios";
 import { baseURL, config } from "../../config";
 import { useReactToPrint } from "react-to-print";
 import Modal from "react-modal";
+import { IoFastFoodSharp } from "react-icons/io5";
+import { FiPrinter } from "react-icons/fi"
+import PrintButton from "../kasir/Transaksi/PrintButton";
 
-// STRUK 
+
 const StrukPrint = ({ transaksiItem }) => {
   return (
-    <div className="struk-container">
-      <h2>Struk Transaksi</h2>
-      {/* Tampilkan informasi transaksi */}
-      <p>Tanggal Transaksi: {transaksiItem.tgl_transaksi}</p>
-      <p>Nama Pelanggan: {transaksiItem.nama_pelanggan}</p>
-      <p>No Meja: {transaksiItem.meja.nomor_meja}</p>
-      <p>User: {transaksiItem.user.nama_user}</p>
+    <div className="struk-container pt-10 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
+      <h2 className="text-center my-4 font-semibold text-base ">
+        <span className=" flex text-sm w-fit mx-auto">
+          {<IoFastFoodSharp />} <p>Foodie Cafe</p>{" "}
+        </span>
+        Struk Transaksi
+      </h2>
 
+      {/* Tampilkan informasi transaksi */}
+      <p>
+        Date:{" "}
+        {new Intl.DateTimeFormat("id-ID").format(
+          new Date(transaksiItem.tgl_transaksi)
+        )}
+      </p>
+      <p>Name Customer: {transaksiItem.nama_pelanggan}</p>
+      <p>No: {transaksiItem.meja.nomor_meja}</p>
+      <p className="mb-4">Chasier: {transaksiItem.user.nama_user}</p>
+      <p>-------------------------------</p>
       <h3>Menu:</h3>
       <ul>
         {transaksiItem.detail_transaksi.map((detailItem) => (
-          <li key={detailItem.id_detail_transaksi}>
+          <li
+            key={detailItem.id_detail_transaksi}
+            className="flex justify-between text-sm"
+          >
             <ul>
               {detailItem.menu.nama_menu} ({detailItem.jumlah})
             </ul>
+            <ul> {detailItem.menu.harga}</ul>
           </li>
         ))}
       </ul>
+      <p>-------------------------------</p>
+      <p className="flex justify-between">
+        SubTotal:{" "}
+        <span>
+          {new Intl.NumberFormat("id-ID").format(
+            transaksiItem.detail_transaksi.reduce(
+              (total, detailItem) =>
+                total + detailItem.menu.harga * detailItem.jumlah,
+              0
+            )
+          )}
+        </span>
+      </p>
+      <p className="flex justify-between">
+        PPN 10%:{" "}
+        <span>
+          {new Intl.NumberFormat("id-ID").format(
+            transaksiItem.detail_transaksi.reduce(
+              (total, detailItem) =>
+                (total + detailItem.menu.harga * detailItem.jumlah *0.1),
+              0
+            )
+          )}
+        </span>
+
+      </p>
+      
+      <p className="flex justify-between">
+        Total:{" "}
+        <span>
+          Rp
+          {new Intl.NumberFormat("id-ID").format(
+            transaksiItem.detail_transaksi.reduce(
+              (total, detailItem) =>
+                (total + detailItem.menu.harga * detailItem.jumlah*0.1) + (detailItem.menu.harga * detailItem.jumlah),
+              0
+            )
+          )}
+        </span>
+
+      </p>
+      <p className="text-center mt-10 text-lg font-semibold">Great Day Start With Coffe</p>
+    
     </div>
   );
 };
@@ -82,8 +143,8 @@ const TransaksiManajer = () => {
   });
 
   return (
-    <div className="max-w-full mx-auto py-6 sm:px-6 lg:px-8">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-6">
+    <div className="max-w-full mx-4 ml-56 py-7 sm:px-3 lg:px-">
+      <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
         Daftar Transaksi
       </h1>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -142,7 +203,7 @@ const TransaksiManajer = () => {
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Struk
+                Print Struk
               </th>
             </tr>
           </thead>
@@ -205,7 +266,7 @@ const TransaksiManajer = () => {
                     className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
                     onClick={() => handlePrint(transaksiItem)}
                   >
-                    Print
+                   <FiPrinter/>
                   </button>
                 </td>
               </tr>
@@ -215,23 +276,24 @@ const TransaksiManajer = () => {
       </div>
 
       {/* Modal Print */}
-      <Modal
+     {/* Modal Print */}
+     <Modal
         isOpen={showPrintModal}
+        overlayRef={false}
         onRequestClose={() => setShowPrintModal(false)}
-        className="print-modal"
+        className="w-fit items-center h-full flex flex-col justify-center  border-neutral-600 mx-auto"
       >
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md mb-4"
-          onClick={handlePrintButtonClick}
-        >
-          Print Struk
-        </button>
-        {selectedTransaksi && (
-          <StrukPrint
-            transaksiItem={selectedTransaksi}
-            ref={componentRef}
-          />
-        )}
+        <div className="mx-auto w-fit bg-white">
+          {selectedTransaksi && (
+            <div id="print-area" className="max-w-xl">
+              <StrukPrint
+                transaksiItem={selectedTransaksi}
+                ref={componentRef}
+              />
+              <PrintButton />
+            </div>
+          )}
+        </div>
       </Modal>
     </div>
   );

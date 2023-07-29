@@ -2,9 +2,7 @@ import Modal from "react-modal";
 import axios from "axios"; //to mannage API
 import { useState, useEffect } from "react";
 // import { MySidebar } from '../components/mySidebar'
-// import { Modal } from "bootstrap"
 import { config, baseURL, imageURL } from "../../config";
-// import { AiOutlineSearch } from "react-icons/ai";
 
 //functional component (Hooks)
 function Menu() {
@@ -153,8 +151,8 @@ function Menu() {
   };
 
   return (
-    <div className=" mx-32  sm:p-4 ">
-      <div className="overflow-x-auto">
+    <div className=" flex sm:p-7 w-full ">
+      <div className="w-full h-screen mx-10 ml-60">
         {/* title */}
         <h1 className="flex justify-center font-medium text-5xl">Menu List</h1>
 

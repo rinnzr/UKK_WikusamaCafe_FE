@@ -30,7 +30,7 @@ function Laporan() {
   };
 
   return (
-    <div className="p-8">
+    <div className="max-w-full mx-10 ml-60 py-14 sm:px-3 lg:px-8">
       <h1 className="text-2xl font-bold mb-4">Tampil Transaksi Berdasarkan Bulan</h1>
       <form onSubmit={handleFormSubmit} className="mb-4">
         <div className="flex mb-2">
@@ -165,22 +165,21 @@ function Laporan() {
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {transaksiItem.status === "belum_bayar" ? (
-                        <button
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
-                          // onClick={() => handleToggleStatus(transaksiItem)}
-                        >
-                          Belum Bayar
-                        </button>
-                      ) : (
-                        <button
-                          className="bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
-                          disabled
-                        >
-                          Lunas
-                        </button>
-                      )}
-                    </td>
+                  {transaksiItem.status === "belum_bayar" ? (
+                    <button
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
+                    >
+                      Belum Bayar
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
+                      disabled
+                    >
+                      Lunas
+                    </button>
+                  )}
+                </td>
                   </tr>
                 ))}
               </tbody>

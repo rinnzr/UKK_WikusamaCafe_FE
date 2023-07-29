@@ -3,7 +3,7 @@ import { useState } from "react"; //membuat state
 import { useNavigate } from "react-router-dom"; //meredirect halaman setelah login lalu ke dashboard
 import axios from "axios"; //mengakses API
 import { baseURL } from "../config";
-// import { baseURL } from '../config';
+import bg from "./Image/bg_login.png";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -26,11 +26,11 @@ function Login() {
         localStorage.setItem("token", response.data.token);
         // localStorage.setItem('username', username);
         if (response.data.data.role === "admin") {
-          history("/admin");
+          history("/DashboardAdmin");
         } else if (response.data.data.role === "kasir"){
-          history("/kasir");
+          history("/DashboardKasir");
         } else{
-          history("/manajer");
+          history("/DashboardManajer");
         }
         
         // alert("Login Berhasil")
@@ -45,8 +45,8 @@ function Login() {
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
-        <div className="flex flex-col max-w-md w-full p-6 rounded-md sm:p-10 bg-[#263A29] text-gray-100">
+      <div className="flex justify-center items-center w-screen h-screen" style={{backgroundImage:`url(${bg})`}}>
+        <div className="flex flex-col max-w-md w-full p-6 rounded-md bg-black  sm:p-10 backdrop-blur-sm  bg-opacity-5  text-gray-100">
           <div className="mb-8 text-center">
             <h1 className="my-3 text-4xl font-bold">Sign in</h1>
             <p className="text-sm text-gray-400">
@@ -69,7 +69,7 @@ function Login() {
                   name="username"
                   id="username"
                   placeholder="username"
-                  className="w-full px-3 py-2 border rounded-md border-gray-700 bg-[#F2E3DB] text-black"
+                  className="w-full px-3 py-2 border rounded-md  border-gray-700 bg-[#F2E3DB] text-black"
                   fdprocessedid="zp48ba"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -104,10 +104,13 @@ function Login() {
                 </button>
               </div>
             </div>
+            <p></p>
+            <h1 className="text-center text-xs font-light">aplikasi kasir untuk menunjang perekonimian umkm kecil dengan fitur fitur yang mudah di gunakan</h1>
           </form>
         </div>
-
       </div>
+<p className="-mt-8 text-center text-black text-opacity-40 font-semibold">Dibuat <span>oleh orin zahara 2023</span></p>
+
     </>
   );
 }

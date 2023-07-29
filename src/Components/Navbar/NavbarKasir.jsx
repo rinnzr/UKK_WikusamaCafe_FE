@@ -1,11 +1,12 @@
 import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {BiCollection,BiFoodMenu} from "react-icons/bi";
+import {BiCollection,BiFoodMenu, BiLogOut} from "react-icons/bi";
 import { TbReportMoney} from "react-icons/tb";
 import {IoFastFoodSharp} from "react-icons/io5"
 
 function NavbarKasir() {
+
   const navigate = useNavigate();
   const userRole = "admin,manajer,kasir";
 
@@ -27,57 +28,43 @@ function NavbarKasir() {
 
   return (
     <>
-      <nav className="bg-[#263A29]">
-        <div className="md:flex p-2 mx-auto items-center">
-          <div className="font-bold container flex items-center text-xl  text-[#F2E3DB]">
-          Foodie Cafe 
-            <div className=" pl-3 text-3xl">
-              <IoFastFoodSharp />
-            </div>
-          </div>
-          <div className="container flex items-center  text-[#F2E3DB] capitalize ">
-            <a
-              href="DashboardKasir"
-              className="flex items-center justify-center px-5 py-2 my-2 font-medium text-base transition-colors duration-300 transform rounded-md hover:bg-[#FFF4E0] hover:text-[#251749] mr-3"
-            >
-              <div className="text-2xl">
-                <BiCollection />
-              </div>
-              <span className="pl-2">Dashboard</span> 
-            </a>
-          </div>
-
-          <div className="container flex items-center  text-[#FFF4E0] capitalize ">
-            <a
-              href="transaksi"
-              className="flex items-center px-5 py-2 my-2 font-medium text-base transition-colors duration-300 transform rounded-md hover:bg-[#FFF4E0] hover:text-[#251749]"
-            >
-              <div className="text-2xl">
-                <TbReportMoney />
-              </div>
-              <span className="pl-2">Transaksi</span>
-            </a>
-          </div>
-          <div className="container flex items-center  text-[#FFF4E0] capitalize ">
-            <a
-              href="Tambahtransaksi"
-              className="flex items-center px-5 py-2 my-2 font-medium text-base transition-colors duration-300 transform rounded-md hover:bg-[#FFF4E0] hover:text-[#251749]"
-            >
-              <div className="text-2xl">
-                <BiFoodMenu />
-              </div>
-              <span className="pl-2">Menu</span>
-            </a>
-          </div>
-          <a
-            className="  flex items-center justify-center h-9  font-bold text-xl w-[120px] rounded ring-2 ring-white  bg-[#F8EAD8] px-5 hover:bg-[#B46060]  focus:ring no-underline text-[#243A73] hover:text-[#FFF4E0]"
-            onClick={handleLogout}
-            href="/"
-          >
-            Logout
-          </a>
-        </div>
-      </nav>
+    <aside className="bg-[#3F2E3E] px-2 h-full w-auto fixed flex flex-col border-spacing-3 rounded-lg">
+      <div className="font-bold text-xl text-[#F2E3DB] py-7 px-6 flex items-center">
+        <IoFastFoodSharp className="text-2xl" />
+        <span className="pl-3">Foodie Cafe </span>
+      </div>
+      <div className="flex-grow flex flex-col text-[#F2E3DB] capitalize">
+        <a
+          href="DashboardKasir"
+          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+        >
+          <BiCollection className="text-xl inline-block" />
+          <span className="pl-2">Dashboard</span>
+        </a>
+        <a
+          href="transaksi"
+          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+        >
+          <TbReportMoney className="text-xl inline-block" />
+          <span className="pl-2">Transaksi</span>
+        </a>
+        <a
+          href="Tambahtransaksi"
+          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+        >
+          <BiFoodMenu className="text-xl inline-block" />
+          <span className="pl-2">Menu</span>
+        </a>
+      </div>
+        <button
+        className="px-6 py-4 font-medium text-[#F2E3DB] mb-10  text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+        onClick={handleLogout}
+      >
+        <BiLogOut className="text-xl inline-block" />
+        <span className="pl-2">Logout</span>
+      </button>
+    </aside>
+      
     </>
   );
 }
@@ -146,7 +133,7 @@ export default NavbarKasir;
             <div classNameName="text-3xl">
               <BiLogOut />
             </div>
-            <span className="mx-2 font-medium text-[#F2E3DB ] ">Logout</span>
+            <span   className="mx-2 font-medium text-[#F2E3DB ] ">Logout</span>
           </a>
         </div>
       </aside> */}

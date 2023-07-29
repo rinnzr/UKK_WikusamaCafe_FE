@@ -69,8 +69,8 @@ function DashboardAdmin() {
 
   return (
     <>
-      <div className="">
-        <div className="container px-6 py-8 mx-auto ">          
+      <div className="ml-52">
+        <div className="container px-14 py-36 mx-auto ">          
           {/* {users.map((item)=> ( */}
             <h1 className="text-2xl font-semibold text-center  capitalize lg:text-3xl text-[#0B2447]">
             Saat ini anda login Sebagai Admin

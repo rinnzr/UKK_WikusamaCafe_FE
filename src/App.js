@@ -6,13 +6,11 @@ import Menu from "./pages/admin/Menu"
 import User from "./pages/admin/User"
 import Meja from "./pages/admin/Meja"
 import DashboardKasir from "./pages/kasir/DashboardKasir";
-import Transaksi from "./pages/kasir/Transaksi";
+import Transaksi from "./pages/kasir/Transaksi/Transaksi";
 import TambahTransaksi from "./pages/kasir/TambahTransaksi";
-
 import DashboardManajer from "./pages/manajer/DashboardManajer"
 import TransaksiManajer from "./pages/manajer/Transaksi";
 import Laporan from "./pages/manajer/Laporan";
-
 import './App.css';
 import Layout from "./Components/layout";
 
@@ -22,7 +20,7 @@ function App(){
 
   return(
     <>
-    <div className="App bg-[#F2E3DB] h-full min-h-screen text-[Poppins]">
+    <div className="App bg-[#EFE1D1] h-full min-h-screen text-[Poppins]">
       
       {/* agar login tidak menampilkan sidebar */}
       {/* {location.pathname !== '/Login' && location.pathname !== '*' && <SidebarAdmin />} */}
@@ -34,20 +32,20 @@ function App(){
         <Route path="/" element={ <Login/>} />
       </Routes> 
       {/* route admin */} 
-      <Routes path="/admin" element={<DashboardAdmin/>}>
+      <Routes path="/DashboardAdmin" element={<DashboardAdmin/>}>
         <Route path="DashboardAdmin" element={<DashboardAdmin/>}/>
         <Route path="menu" element={<Menu/>}/>
         <Route path="user" element={<User/>}/>
         <Route path="meja" element={<Meja/>}/>
       </Routes>
       {/* route kasir */}
-      <Routes path="  /kasir" element={<DashboardKasir/>}>
+      <Routes path="/DashboardKasir" element={<DashboardKasir/>}>
       <Route path="DashboardKasir" element={<DashboardKasir/>}/>
         <Route path="transaksi" element={<Transaksi/>}/>
         <Route path="Tambahtransaksi" element={<TambahTransaksi/>}/>
       </Routes>
       {/* route manajer */}
-      <Routes path="  /manajer" element={<DashboardManajer/>}>
+      <Routes path="/DashboardManajer" element={<DashboardManajer/>}>
       <Route path="DashboardManajer" element={<DashboardManajer/>}/>
       <Route path="TransaksiManajer" element={<TransaksiManajer/>}/>
       <Route path="Laporan" element={<Laporan/>}/>

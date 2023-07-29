@@ -69,8 +69,8 @@ function DashboardManajer() {
 
   return (
     <>
-      <div className="">
-        <div className="container px-6 py-8 mx-auto ">          
+      <div className="flex sm:p-7 w-full">
+        <div className="w-full h-screen mx-10 mt-28 ml-60 ">          
           {/* {users.map((item)=> ( */}
             <h1 className="text-2xl font-semibold text-center  capitalize lg:text-3xl text-[#0B2447]">
             Saat ini anda login Sebagai manajer
