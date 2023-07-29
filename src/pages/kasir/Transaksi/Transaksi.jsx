@@ -98,6 +98,8 @@ const Transaksi = () => {
   const componentRef = useRef();
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
+  const [filteredData, setFilteredData] = useState([]);
+
 
   useEffect(() => {
     fetchTransaksi();
@@ -118,6 +120,10 @@ const Transaksi = () => {
     } catch (error) {
       console.error(error);
     }
+    // const userDataString = localStorage.getItem('namauser');
+    // const userNameData = JSON.parse(userDataString);
+    // const filteredData = transaksi.filter((item) => item.user.nama_user ===userNameData );
+    // setFilteredData(filteredData);
   };
 
   const handleToggleStatus = async (transaksiItem) => {
@@ -155,17 +161,8 @@ const Transaksi = () => {
   });
 
 
-  const userData = JSON.parse(localStorage.getItem('namauser'));
-  const [filteredData, setFilteredData] = useState([]);
 
-  useEffect(() => {
-    // Filter data berdasarkan nama pengguna yang login
-    const filteredData = transaksi.filter((item) => item.user.nama_user === userData);
-    setFilteredData(filteredData);
-
-  }, [userData]);
-
-  
+ 
   return (
     <div className="max-w-full mx-10 ml-60 py-14 sm:px-3 lg:px-8">
       <h1 className="text-3xl font-semibold text-gray-900 mb-6  flex justify-center">
@@ -232,7 +229,7 @@ const Transaksi = () => {
             </tr>
           </thead>
           <tbody className=" divide-y divide-gray-200">
-            {filteredData.map((transaksiItem, index) => (
+            {transaksi.map((transaksiItem, index) => (
               <tr
                 key={transaksiItem.id_transaksi}
                 className={`${index % 2 === 0 ? "bg-[#C8B6A6]" : ""}`}
