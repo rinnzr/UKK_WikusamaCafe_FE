@@ -143,7 +143,8 @@ const TransaksiManajer = () => {
   });
 
   return (
-    <div className="max-w-full mx-4 ml-56 py-7 sm:px-3 lg:px-">
+    <div className="flex pr-4 w-full">
+      <div className="w-full h-full">
       <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
         Daftar Transaksi
       </h1>
@@ -295,6 +296,7 @@ const TransaksiManajer = () => {
           )}
         </div>
       </Modal>
+    </div>
     </div>
   );
 };

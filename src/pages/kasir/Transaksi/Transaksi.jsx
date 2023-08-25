@@ -6,6 +6,7 @@ import { useReactToPrint } from "react-to-print";
 import Modal from "react-modal";
 import PrintButton from "./PrintButton";
 import { IoFastFoodSharp } from "react-icons/io5";
+import { filter } from "@chakra-ui/react";
 
 // STRUK
 const StrukPrint = ({ transaksiItem }) => {
@@ -62,14 +63,13 @@ const StrukPrint = ({ transaksiItem }) => {
           {new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
               (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah *0.1),
+                total + detailItem.menu.harga * detailItem.jumlah * 0.1,
               0
             )
           )}
         </span>
-
       </p>
-      
+
       <p className="flex justify-between">
         Total:{" "}
         <span>
@@ -77,15 +77,17 @@ const StrukPrint = ({ transaksiItem }) => {
           {new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
               (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah*0.1) + (detailItem.menu.harga * detailItem.jumlah),
+                total +
+                detailItem.menu.harga * detailItem.jumlah * 0.1 +
+                detailItem.menu.harga * detailItem.jumlah,
               0
             )
           )}
         </span>
-
       </p>
-      <p className="text-center mt-10 text-lg font-semibold">Great Day Start With Coffe</p>
-    
+      <p className="text-center mt-10 text-lg font-semibold">
+        Great Day Start With Coffe
+      </p>
     </div>
   );
 };
@@ -99,7 +101,6 @@ const Transaksi = () => {
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
   const [filteredData, setFilteredData] = useState([]);
-
 
   useEffect(() => {
     fetchTransaksi();
@@ -144,8 +145,6 @@ const Transaksi = () => {
     }
   };
 
-  
-
   const handlePrint = (transaksiItem) => {
     setSelectedTransaksi(transaksiItem);
     setShowPrintModal(true);
@@ -160,16 +159,27 @@ const Transaksi = () => {
     onAfterPrint: handleAfterPrint,
   });
 
+  useEffect(() => {
+    const filterData = () => {
+      const filteredData = transaksi.filter(
+        (item) =>
+          item.user.nama_user.replace(
+            item. user.nama_user,
+            `"${item.user.nama_user}"`
+          ) === localStorage.getItem("namauser")
+      );
+      setFilteredData(filteredData);
+    };
+    filterData();
+  }, [transaksi]);
 
-
- 
   return (
-    <div className="max-w-full mx-10 ml-60 py-14 sm:px-3 lg:px-8">
+    <div className="max-w-full lg:px-8">
       <h1 className="text-3xl font-semibold text-gray-900 mb-6  flex justify-center">
         Daftar Transaksi
       </h1>
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="shadow overflow-y-scroll sm:rounded-lg">
+        <table className="min-w-full">
           <thead className="bg-[#3F2305]">
             <tr>
               <th
@@ -228,8 +238,8 @@ const Transaksi = () => {
               </th>
             </tr>
           </thead>
-          <tbody className=" divide-y divide-gray-200">
-            {transaksi.map((transaksiItem, index) => (
+          <tbody>
+            {filteredData.map((transaksiItem, index) => (
               <tr
                 key={transaksiItem.id_transaksi}
                 className={`${index % 2 === 0 ? "bg-[#C8B6A6]" : ""}`}
@@ -293,12 +303,16 @@ const Transaksi = () => {
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
-                    onClick={() => handlePrint(transaksiItem)}
-                  >
-                    Print
-                  </button>
+                  {transaksiItem.status === "lunas" ? (
+                    <button
+                      className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
+                      onClick={() => handlePrint(transaksiItem)}
+                    >
+                      Print
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </td>
               </tr>
             ))}

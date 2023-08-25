@@ -20,8 +20,8 @@ function DashboardKasir() {
 
   return (
 <>
-  <section className="sm:p-7 h-screen flex items-center">
-  <div className="text-[#3F2E3E] w-full mx-10 ml-60 ">
+  <section className="h-screen flex items-center">
+  <div className="text-[#3F2E3E] w-full ">
     <div className="container flex flex-col mx-auto lg:flex-row">
       {/* <div  style={{backgroundImage:`url(${bg})`}}></div> */}
       <div className="w-1/3 aspect-video bg-cover ">

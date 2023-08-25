@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {BiCollection, BiLogOut} from "react-icons/bi";
 import {IoFastFoodSharp} from "react-icons/io5"
+import {MdOutlineNoFood } from "react-icons/md";
 import {TbReport, TbReportMoney} from "react-icons/tb";
 
 function NavbarManajer() {
@@ -27,9 +28,9 @@ function NavbarManajer() {
 
   return (
     <>
-    <aside className="bg-[#3F2E3E] h-full w-auto fixed flex flex-col border-spacing-3 rounded-lg">
+    <aside className="bg-[#3F2E3E] h-full w-auto fixed flex flex-col border-spacing-3">
       <div className="font-bold text-xl text-[#F2E3DB] py-7 px-6 flex items-center">
-        <IoFastFoodSharp className="text-2xl" />
+        <MdOutlineNoFood className="text-2xl" />
         <span className="pl-3">Foodie Cafe </span>
       </div>
       <div className="flex-grow flex flex-col text-[#F2E3DB] capitalize">
