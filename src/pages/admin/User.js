@@ -135,8 +135,8 @@ function User() {
   };
 
   return (
-    <div className=" flex sm:p-7 w-full ">
-      <div className="w-full h-screen mx-10 ml-60">
+    <div className=" flex w-full pr-4 ">
+      <div className="w-full h-screen">
         {/* title */}
         <h1 className="flex justify-center font-medium text-5xl">User List</h1>
 
@@ -159,7 +159,7 @@ function User() {
 
         {/* table */}
         <table className="min-w-full mt-4">
-          <thead className="bg-[#CD104D]  w-full text-lg text-white">
+          <thead className="bg-[#41644A]  w-full text-lg text-white">
             <tr>
               <th className=" p-3">No</th>
               <th className="py-3">Nama</th>
@@ -168,9 +168,9 @@ function User() {
               <th className="py-3 pl-14">Action</th>
             </tr>
           </thead>
-          <tbody className="border-b border-opacity-20 divide-black divide-y-2 py-4 min-h-[90px] max-h-[100px] border-gray-700 bg-rose-200 text-base text-[Poppins]">
+          <tbody className="border-b border-opacity-20 py-4 min-h-[90px] max-h-[100px] border-gray-700 bg-yellow-100 text-base">
             {users.map((item, index) => (
-              <tr key={item.id_user} className="hover:bg-rose-100">
+              <tr key={item.id_user} className="hover:bg-yellow-50">
                 <th className="p-3">{index + 1}</th>
                 <td>{item.nama_user}</td>
                 <td>{item.role}</td>

@@ -30,7 +30,8 @@ function Laporan() {
   };
 
   return (
-    <div className="max-w-full mx-10 ml-60 py-14 sm:px-3 lg:px-8">
+    <div className="flex pr-4 w-full ">
+      <div className="w-full h-screen">
       <h1 className="text-2xl font-bold mb-4">Tampil Transaksi Berdasarkan Bulan</h1>
       <form onSubmit={handleFormSubmit} className="mb-4">
         <div className="flex mb-2">
@@ -187,6 +188,7 @@ function Laporan() {
           )
         )}
       </div>
+    </div>
     </div>
   );
 }

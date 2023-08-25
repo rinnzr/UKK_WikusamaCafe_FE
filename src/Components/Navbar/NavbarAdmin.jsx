@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiCollection, BiFoodMenu, BiTable, BiUser, BiLogOut } from "react-icons/bi";
 import { IoFastFoodSharp } from "react-icons/io5";
+import {MdOutlineNoFood } from "react-icons/md"
 
 function NavbarAdmin() {
   const navigate = useNavigate();
@@ -25,23 +26,23 @@ function NavbarAdmin() {
   };
 
   return (
-    <aside className="bg-[#3F2E3E] h-full w-auto fixed flex flex-col border-spacing-3 rounded-lg">
+    <aside className="bg-[#3F2E3E] h-full w-auto fixed flex flex-col border-spacing-3">
       <div className="font-bold text-xl text-[#F2E3DB] py-7 px-6 flex items-center">
-        <IoFastFoodSharp className="text-2xl" />
+        <MdOutlineNoFood className="text-2xl" />
         <span className="pl-3">Foodie Cafe </span>
       </div>
     
       <div className="flex-grow flex flex-col text-[#F2E3DB] capitalize">
         <a
           href="DashboardAdmin"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C]"
         >
           <BiCollection className="text-xl inline-block" />
           <span className="pl-2">Dashboard</span>
         </a>
         <a
           href="menu"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C]"
         >
           <BiFoodMenu className="text-xl inline-block" />
           <span className="pl-2">Menu</span>

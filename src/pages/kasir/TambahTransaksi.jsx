@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL, config, myToken, imageURL } from "../../config";
-
+import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 function TambahTransaksi() {
   const [menu, setMenu] = useState([]);
   const [meja, setMeja] = useState([]);
@@ -161,7 +161,7 @@ function TambahTransaksi() {
   }, [detailTransaksi, menu]);
 
   return (
-    <div className="py-6 mx-10 ml-60 pt-9 overflow-auto">
+    <div className="overflow-auto mt-5">
       <h1 className="flex justify-center font-semibold text-3xl">
         Tambah Transaksi
       </h1>
@@ -312,12 +312,66 @@ function TambahTransaksi() {
           </table>
         </div> */}
 
-        {/* Total Harga */}
+        
+        <div className="flex justify-center gap-4 mt-6">
+          {menu.map((menu) => (
+            <>
+              <div key={menu.id_menu} className="bg-white w-fit capitalize rounded-lg">
+                <p className="font-medium"><b>{menu.nama_menu}</b></p>
+                <p>Rp{menu.harga}</p>
+                <img
+                  className="object-contain h-40 w-40"
+                  src={imageURL + menu.gambar}
+                  alt={menu.gambar}
+                />
+                <input
+                  type="number"
+                  value={
+                    detailTransaksi.find(
+                      (item) => item.id_menu === menu.id_menu
+                    )?.jumlah || 0
+                  }
+                  min="0"
+                  max="99"
+                  onChange={(event) =>
+                    handleQtyChange(menu.id_menu, event.target.value)
+                  }
+                  className="w-24 text-center border rounded-md py-2 px-2 text-black"
+                />
+                <td className="p-3 px-2 text-center">
+                  <b>Rp</b>{menu.harga *
+                    (detailTransaksi.find(
+                      (item) => item.id_menu === menu.id_menu
+                    )?.jumlah || 0)}
+                </td>
+                <button
+                  type="button"
+                  onClick={() => handleAddToCart(menu.id_menu, 1)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
+                  required
+                >
+                  <AiFillPlusCircle />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleAddToCart(menu.id_menu, -1)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                  required
+                >
+                  <AiFillMinusCircle />
+                </button>
+              </div>
+              
+            </>
+          ))}
+        </div>
+        <div className="mt-5">
+          {/* Total Harga */}
         <div>
           <label className="block mb-1 text-xl font-bold text-gray-900">
             Total Harga:
           </label>
-          <span className="text-xl">{totalHarga}</span>
+          <span className="text-xl"> Rp{totalHarga}</span>
         </div>
 
         {/* Tombol Submit */}
@@ -327,62 +381,8 @@ function TambahTransaksi() {
         >
           Tambah Transaksi
         </button>
-        <div  className="flex justify-center gap-4 bg-slate-200">
-        {menu.map((menu) => (
-          <>
-          <div className="bg-white w-fit capitalize">
-          <p className="font-medium">{menu.nama_menu}</p>
-            <p>{menu.harga}</p>
-            <img
-            className="object-contain h-40"
-            src={imageURL + menu.gambar}
-            alt={menu.gambar}
-          />
-            <input
-                      type="number"
-                      value={
-                        detailTransaksi.find(
-                          (item) => item.id_menu === menu.id_menu
-                        )?.jumlah || 0
-                      }
-                      min="0"
-                      max="99"
-                      onChange={(event) =>
-                        handleQtyChange(menu.id_menu, event.target.value)
-                      }
-                      className="w-24 text-center border rounded-md py-2 px-2 text-black"
-                    />
-                     <td className="p-3 px-2 text-center">
-                    {menu.harga *
-                      (detailTransaksi.find(
-                        (item) => item.id_menu === menu.id_menu
-                      )?.jumlah || 0)}
-                  </td>
-                  <button
-                      type="button"
-                      onClick={() => handleAddToCart(menu.id_menu, 1)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
-                      required
-                    >
-                      Tambah
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleAddToCart(menu.id_menu, -1)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-                      required
-                    >
-                      Kurang
-                    </button>
-
-          </div>
-            
-          </>
-        ))}
-      </div>
+        </div>
       </form>
-
-      
     </div>
   );
 }

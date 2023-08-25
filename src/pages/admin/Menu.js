@@ -151,8 +151,8 @@ function Menu() {
   };
 
   return (
-    <div className=" flex sm:p-7 w-full ">
-      <div className="w-full h-screen mx-10 ml-60">
+    <div className=" flex  w-full h-full pr-4 ">
+      <div className="w-full h-screen">
         {/* title */}
         <h1 className="flex justify-center font-medium text-5xl">Menu List</h1>
 
@@ -175,7 +175,7 @@ function Menu() {
 
         {/* table */}
         <table className="w-full mt-4 border-collapse">
-  <thead className="bg-[#F97B22] w-full text-lg text-white">
+  <thead className="bg-[#A64B2A] w-full text-lg text-white">
     <tr>
       <th className="py-3 px-4">No</th>
       <th className="py-3 px-4">Nama Menu</th>
@@ -186,7 +186,7 @@ function Menu() {
       <th className="py-3 px-4">Action</th>
     </tr>
   </thead>
-  <tbody className="bg-[#FEE8B0] divide-y divide-gray-700 text-base">
+  <tbody className="bg-[#FFEBC1] divide-y divide-gray-700 text-base">
     {menus.map((item, index) => (
       <tr key={item.id_menu} className="hover:bg-amber-100">
         <td className="py-3 px-4">{index + 1}</td>

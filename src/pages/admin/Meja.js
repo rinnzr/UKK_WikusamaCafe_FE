@@ -146,8 +146,8 @@ export default class Meja extends React.Component {
 
   render() {
     return (
-      <div className='flex sm:p-7 w-full'>
-        <div className="w-full h-screen mx-10 ml-60">
+      <div className='flex pr-4 w-full'>
+        <div className="w-full h-screen">
           {/* <Sidebar /> */}
           <div className=" overflow-x-auto sm:rounded-lg">
           <h1 className="flex justify-center font-medium text-5xl">Meja List</h1>
@@ -155,7 +155,7 @@ export default class Meja extends React.Component {
                 Tambah Meja
               </button>
             <table class="min-w-full text-sm text-left text-gray-700">
-              <thead class="text-xs text-gray-100 uppercase bg-[#E14D2A]">
+              <thead class="text-xs text-gray-100 uppercase bg-[#F0997D]">
                 <tr className="text-base">
                   <th scope="col" className="px-6 py-3">
                     Nomor Meja
