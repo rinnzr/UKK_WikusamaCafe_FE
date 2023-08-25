@@ -143,9 +143,9 @@ const TransaksiManajer = () => {
   });
 
   return (
-    <div className="flex pr-4 w-full">
+    <div className="flex pr-4 w-full ">
       <div className="w-full h-full">
-      <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
+      <h1 className="text-2xl font-semibold text-gray-900 mb-6 flex justify-center">
         Daftar Transaksi
       </h1>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
