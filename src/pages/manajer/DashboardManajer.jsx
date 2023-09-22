@@ -2,10 +2,9 @@ import { useState, useEffect } from "react"; // usestate untuk menyimpan nilai, 
 import axios from "axios";
 // import { FiBookOpen,FiUser } from "react-icons/fi";
 // import{FaHands} from "react-icons/fa";
-import Layout from "../../Components/layout"
 import { baseURL, config } from "../../config";
 
-function DashboardAdmin() {
+function DashboardManajer() {
   const [mejas, setMejas] = useState("");
   const [menus, setMenus] = useState("");
   const [user, setUser] = useState("");
@@ -69,17 +68,17 @@ function DashboardAdmin() {
 
   return (
     <>
-      <div className="ml-52">
-        <div className="container px-14 py-36 mx-auto ">          
+      <div className="flex sm:p-7 w-full">
+        <div className="w-full h-screen mx-10 mt-28 ml-60 ">          
           {/* {users.map((item)=> ( */}
             <h1 className="text-2xl font-semibold text-center  capitalize lg:text-3xl text-[#0B2447]">
-            Saat ini anda login Sebagai Admin
+            Saat ini anda login Sebagai manajer
           </h1>
           {/* ))} */}
 
           <p className="max-w-2xl mx-auto mt-4 text-center  xl:mt-6 text-[#0B2447]">
-            Selamat Bekerja Admin jangan lelah ya, kalo lelah itu ngejar dia tapi ga dapet
-            Admin kamu hanya bisa CRUD di semua asset, kalo ngerubahin dia biar suka jangan deh 
+            Hai Manajer aku tau kamu cuma liat-liat penghasilan perbulan dan perhari 
+            Tetap Semangat yaaaaa!!!! love Manajer
           </p>
 
           <div className="grid grid-cols-1 gap-8 mt-6 xl:mt-12 xl:gap-12 md:grid-cols-2 lg:grid-cols-3">
@@ -130,4 +129,4 @@ function DashboardAdmin() {
   );
 }
 
-export default DashboardAdmin;
+export default DashboardManajer;

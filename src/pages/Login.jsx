@@ -1,42 +1,37 @@
-import React from "react";
-import { useState } from "react"; //membuat state
-import { useNavigate } from "react-router-dom"; //meredirect halaman setelah login lalu ke dashboard
-import axios from "axios"; //mengakses API
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { baseURL } from "../config";
-import bg from "./Image/bg_login.png";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const history = useNavigate();
-
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [messages, setMessages] = React.useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(baseURL+ "/auth/auth", {
+      const response = await axios.post(baseURL + "/auth/auth", {
         username,
         password,
       });
-      console.log(response.data);
       if (response.data.logged) {
         localStorage.setItem("logged", response.data.logged);
-        localStorage.setItem("namauser", JSON.stringify(response.data.data.nama_user));
-        localStorage.setItem("id_user", JSON.stringify(response.data.data.id_user));
-        localStorage.setItem("user", JSON.stringify(response.data.data.role));
+        localStorage.setItem("namauser", response.data.data.nama_user);
+        localStorage.setItem("id_user", response.data.data.id_user);
+        localStorage.setItem("user", response.data.data.role);
         localStorage.setItem("token", response.data.token);
-        // localStorage.setItem('username', username);
         if (response.data.data.role === "admin") {
-          history("/DashboardAdmin");
-        } else if (response.data.data.role === "kasir"){
-          history("/DashboardKasir");
-        } else{
-          history("/DashboardManajer");
+          navigate("/dashboard-admin");
+        } else if (response.data.data.role === "kasir") {
+          navigate("/dashboard-kasir");
+        } else {
+          navigate("/dashboard-manajer");
         }
-        
-        // alert("Login Berhasil")
       } else {
-        console.log("LOGIN GAGAL");
-        alert("Login Gagal");
+        if (response.data.message) {
+          setMessages(true);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -45,9 +40,12 @@ function Login() {
 
   return (
     <>
-      <div className="flex justify-center items-center w-screen h-screen" style={{backgroundImage:`url(${bg})`}}>
-        <div className="flex flex-col max-w-md w-full p-6 rounded-md bg-black  sm:p-10 backdrop-blur-sm  bg-opacity-5  text-gray-100">
-          <div className="mb-8 text-center">
+      <div
+        className="flex justify-center items-center w-screen h-screen"
+        style={{ backgroundImage: 'url("/bg_login.png")' }}
+      >
+        <div className="flex flex-col w-full h-full p-6 rounded-md justify-center bg-black  backdrop-blur-sm  bg-opacity-5  text-gray-100">
+          <div className="mb-8 text-center  ">
             <h1 className="my-3 text-4xl font-bold">Sign in</h1>
             <p className="text-sm text-gray-400">
               Sign in to access your account
@@ -57,60 +55,71 @@ function Login() {
             onSubmit={handleSubmit}
             className="space-y-12 ng-untouched ng-pristine ng-valid"
           >
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <label for="username" className="text-sm">
-                    Username
-                  </label>
-                </div>
+            <div className="space-y-4 max-w-sm mx-auto">
+              <div className="mb-4 mt-6">
+                <label
+                  htmlFor="username"
+                  className={`block -mb-5 font-medium ${
+                    username ? "transform -translate-y-7 text-sm mt-10" : ""
+                  } transition-all duration-300`}
+                >
+                  username
+                </label>
                 <input
                   type="text"
                   name="username"
                   id="username"
                   placeholder="username"
-                  className="w-full px-3 py-2 border rounded-md  border-gray-700 bg-[#F2E3DB] text-black"
-                  fdprocessedid="zp48ba"
+                  className="w-full px-3 py-3 focus:ring-4 text-black  rounded focus:outline-none focus:ring-teal-400"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  required
                 />
               </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <label for="password" className="text-sm">
-                    Password
-                  </label>
-                </div>
+              <div className="mb-2 mt-6">
+                <label
+                  htmlFor="username"
+                  className={`block -mb-5 font-medium ${
+                    password ? "transform -translate-y-7 text-sm mt-10" : ""
+                  } transition-all duration-300`}
+                >
+                  Password
+                </label>
                 <input
                   type="password"
                   name="password"
                   id="password"
                   placeholder="password"
-                  className="w-full px-3 py-2 border rounded-md border-[#4D4D4D] bg-[#F2E3DB] text-black"
-                  fdprocessedid="qaktod"
+                  className="w-full px-3 py-3 focus:ring-4 text-neutral-600 placeholder:font-normal font-extrabold rounded focus:outline-none focus:ring-teal-400"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                {messages === true && (
+                  <p className="text-end text-sm mt-2  text-red-300">
+                    password atau username salah!
+                  </p>
+                )}
               </div>
             </div>
-            <div className="space-y-2">
+
+            <div className="max-w-sm mx-auto">
               <div>
                 <button
                   type="submit"
-                  className="w-full px-8 py-3 font-semibold rounded-md bg-[#E86A33] text-white" >
+                  className="w-full px-8 py-3 font-semibold rounded-md bg-gradient-to-r  from-teal-200 to-lime-200 text-neutral-500"
+                >
                   Sign in
                 </button>
               </div>
             </div>
             <p></p>
-            <h1 className="text-center text-xs font-light">aplikasi kasir untuk menunjang perekonimian umkm kecil dengan fitur fitur yang mudah di gunakan</h1>
+            <h1 className="text-center text-xs font-light max-w-sm px-12 bg-black bg-opacity-20 rounded-lg py-4 mx-auto">
+              aplikasi kasir untuk menunjang perekonimian umkm kecil dengan
+              fitur fitur yang mudah di gunakan
+            </h1>
           </form>
         </div>
       </div>
-<p className="-mt-8 text-center text-black text-opacity-40 font-semibold">Dibuat <span>oleh orin zahara 2023</span></p>
-
     </>
   );
 }

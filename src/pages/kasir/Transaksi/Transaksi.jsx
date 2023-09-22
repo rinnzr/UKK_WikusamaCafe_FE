@@ -1,137 +1,35 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import * as React from "react";
 import axios from "axios";
+import { useRef } from "react";
 import { baseURL, config } from "../../../config";
-import { useReactToPrint } from "react-to-print";
 import Modal from "react-modal";
 import PrintButton from "./PrintButton";
-import { IoFastFoodSharp } from "react-icons/io5";
-
-// STRUK
-const StrukPrint = ({ transaksiItem }) => {
-  return (
-    <div className="struk-container pt-10 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
-      <h2 className="text-center my-4 font-semibold text-base ">
-        <span className=" flex text-sm w-fit mx-auto">
-          {<IoFastFoodSharp />} <p>Foodie Cafe</p>{" "}
-        </span>
-        Struk Transaksi
-      </h2>
-
-      {/* Tampilkan informasi transaksi */}
-      <p>
-        Date:{" "}
-        {new Intl.DateTimeFormat("id-ID").format(
-          new Date(transaksiItem.tgl_transaksi)
-        )}
-      </p>
-      <p>Name Customer: {transaksiItem.nama_pelanggan}</p>
-      <p>No: {transaksiItem.meja.nomor_meja}</p>
-      <p className="mb-4">Chasier: {transaksiItem.user.nama_user}</p>
-      <p>-------------------------------</p>
-      <h3>Menu:</h3>
-      <ul>
-        {transaksiItem.detail_transaksi.map((detailItem) => (
-          <li
-            key={detailItem.id_detail_transaksi}
-            className="flex justify-between text-sm"
-          >
-            <ul>
-              {detailItem.menu.nama_menu} ({detailItem.jumlah})
-            </ul>
-            <ul> {detailItem.menu.harga}</ul>
-          </li>
-        ))}
-      </ul>
-      <p>-------------------------------</p>
-      <p className="flex justify-between">
-        SubTotal:{" "}
-        <span>
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                total + detailItem.menu.harga * detailItem.jumlah,
-              0
-            )
-          )}
-        </span>
-      </p>
-      <p className="flex justify-between">
-        PPN 10%:{" "}
-        <span>
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah *0.1),
-              0
-            )
-          )}
-        </span>
-
-      </p>
-      
-      <p className="flex justify-between">
-        Total:{" "}
-        <span>
-          Rp
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah*0.1) + (detailItem.menu.harga * detailItem.jumlah),
-              0
-            )
-          )}
-        </span>
-
-      </p>
-      <p className="text-center mt-10 text-lg font-semibold">Great Day Start With Coffe</p>
-    
-    </div>
-  );
-};
+import { BsFillPrinterFill } from "react-icons/bs";
+import { AiFillCheckSquare } from "react-icons/ai";
+import { format, parseISO } from "date-fns";
+import StrukPrint from "./print";
 
 // DAFTAR TRANSAKSI
 const Transaksi = () => {
-  const [transaksi, setTransaksi] = useState([]);
-  const [showPrintModal, setShowPrintModal] = useState(false);
-  const [selectedTransaksi, setSelectedTransaksi] = useState(null);
+  const [transaksi, setTransaksi] = React.useState([]);
+  const [showPrintModal, setShowPrintModal] = React.useState(false);
+  const [selectedTransaksi, setSelectedTransaksi] = React.useState(null);
   const componentRef = useRef();
-  const [user, setUser] = useState([]);
-  const navigate = useNavigate();
-  const [filteredData, setFilteredData] = useState([]);
 
-
-  useEffect(() => {
-    fetchTransaksi();
-  }, []);
-  useEffect(() => {
-    // Cek apakah user sudah login atau belum
-    if (!localStorage.getItem("logged")) {
-      navigate("/");
-    } else {
-      let id_user = localStorage.getItem("id_user");
-      setUser(`${id_user}`);
-    }
-  }, [navigate]);
-  const fetchTransaksi = async () => {
+  React.useEffect(async () => {
     try {
       const response = await axios.get(baseURL + "/transaksi", config);
       setTransaksi(response.data.data);
     } catch (error) {
       console.error(error);
     }
-    // const userDataString = localStorage.getItem('namauser');
-    // const userNameData = JSON.parse(userDataString);
-    // const filteredData = transaksi.filter((item) => item.user.nama_user ===userNameData );
-    // setFilteredData(filteredData);
-  };
+  }, []);
 
   const handleToggleStatus = async (transaksiItem) => {
     const updatedTransaksi = {
       ...transaksiItem,
       status: transaksiItem.status === "belum_bayar" ? "lunas" : "belum_bayar",
     };
-
     try {
       await axios.put(
         baseURL + "/transaksi/" + transaksiItem.id_transaksi,
@@ -142,130 +40,154 @@ const Transaksi = () => {
     } catch (error) {
       console.error(error);
     }
+    console.log(transaksi);
   };
-
-  
-
   const handlePrint = (transaksiItem) => {
     setSelectedTransaksi(transaksiItem);
     setShowPrintModal(true);
   };
-
-  const handleAfterPrint = () => {
-    setShowPrintModal(false);
+  const formatISODate = (isoDateString) => {
+    const dateObj = parseISO(isoDateString);
+    const formattedDate = format(dateObj, "dd/MM/yyyy");
+    const formattedTime = format(dateObj, "HH:mm:ss");
+    return (
+      <>
+        <p>Date: {formattedDate}</p>
+        <p>Time: {formattedTime}</p>
+      </>
+    );
   };
 
-  const handlePrintButtonClick = useReactToPrint({
-    content: () => componentRef.current,
-    onAfterPrint: handleAfterPrint,
-  });
-
-
-
- 
+  const data = transaksi
+    .filter(
+      (data) =>
+        data.user && data.user.nama_user === localStorage.getItem("namauser")
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.updatedAt);
+      const dateB = new Date(b.updatedAt);
+      return dateB - dateA;
+    });
+  console.log(data);
   return (
-    <div className="max-w-full mx-10 ml-60 py-14 sm:px-3 lg:px-8">
-      <h1 className="text-3xl font-semibold text-gray-900 mb-6  flex justify-center">
+    <div className="max-w-full text-xs pb-14 px-2">
+      <h1 className="text-3xl sticky top-0  py-3 bg-white w-full text-center font-semibold text-gray-900 flex justify-center">
         Daftar Transaksi
       </h1>
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-[#3F2305]">
+
+      <div className="shadow  border-b max-w-7xl fixed w-full overflow-y-scroll h-[670px] scrollbar-none border-gray-200 sm:rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200  ">
+          <thead className="bg-[#3F2305] text-[10px] sticky top-0">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left  font-medium text-[#FFFF] uppercase max-w-[12px] tracking-wider"
               >
                 No
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-2 py-3 text-left  font-medium text-[#FFFF] uppercase max-w-fi tracking-wider"
               >
                 Tanggal Transaksi
-              </th>
+              </th>{" "}
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
-              >
-                Nama Pelanggan
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="py-3 text-center  font-medium text-[#FFFF]  uppercase max-w-[50px] tracking-wider"
               >
                 No Meja
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="py-3 text-left  font-medium text-[#FFFF] uppercase tracking-wider"
               >
-                User
+                Nama Pelanggan
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left  font-medium text-[#FFFF] uppercase tracking-wider"
+              >
+                Chasier
+              </th>
+              <th
+                scope="col"
+                className="py-3 text-left  font-medium text-[#FFFF] uppercase tracking-wider"
               >
                 Menu
               </th>
+              <th className="py-3 px-2 text-left font-medium text-[#FFFF] uppercase tracking-wider">
+                Harga Satuan
+              </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left font-medium text-[#FFFF] uppercase tracking-wider"
               >
                 Total
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="text-left  font-medium text-[#FFFF] uppercase tracking-wider"
               >
-                Status
+                Status <br /> Bayar
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="w-2 py-3 font-medium text-[#FFFF] uppercase tracking-wider"
               >
                 Struk
               </th>
             </tr>
           </thead>
-          <tbody className=" divide-y divide-gray-200">
-            {transaksi.map((transaksiItem, index) => (
+          <tbody className="overflow-y-scroll">
+            {data.map((transaksiItem, index) => (
               <tr
                 key={transaksiItem.id_transaksi}
-                className={`${index % 2 === 0 ? "bg-[#C8B6A6]" : ""}`}
+                className={index % 2 === 0 ? "bg-[#C8B6A6] bg-opacity-30" : ""}
               >
-                <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {new Intl.DateTimeFormat("id-ID").format(
-                    new Date(transaksiItem.tgl_transaksi)
-                  )}
+                <td className="py-1 mx-auto text-center">{index + 1}</td>
+                <td className="py-1">
+                  <p>{formatISODate(transaksiItem.updatedAt)}</p>{" "}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {transaksiItem.nama_pelanggan}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {transaksiItem.meja.nomor_meja}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {transaksiItem.user.nama_user}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-1">{transaksiItem.meja.nomor_meja}</td>
+                <td className="py-1 ">{transaksiItem.nama_pelanggan}</td>
+                <td className="px-6 py-1">{transaksiItem.user.nama_user}</td>
+                <td className="py-1">
                   <ul>
-                    {transaksiItem.detail_transaksi.map((detailItem) => (
+                    {transaksiItem.detail_transaksi.map((detailItem, idx) => (
                       <li
                         key={detailItem.id_detail_transaksi}
-                        className="text-xl font-medium"
+                        className={
+                          idx % 2 === 0 && idx !== 0
+                            ? "bg-neutral-100 font-light flex justify-between"
+                            : "font-light flex justify-between"
+                        }
                       >
-                        {" "}
-                        -
-                        <span className="text-base font-normal">
-                          {detailItem.menu.nama_menu} ({detailItem.jumlah})
+                        <span className="font-normal">
+                          {idx + 1}.{detailItem.menu.nama_menu}
                         </span>
+                        {detailItem.jumlah}
                       </li>
                     ))}
                   </ul>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td>
+                  {transaksiItem.detail_transaksi.map((detailItem, idx) => (
+                    <p
+                      key={detailItem.id_detail_transaksi}
+                      className={
+                        idx % 2 === 0 && idx !== 0
+                          ? "bg-neutral-100 font-light pl-2"
+                          : "font-light pl-2"
+                      }
+                    >
+                      Rp.
+                      {new Intl.NumberFormat("id-ID").format(
+                        detailItem.menu.harga
+                      )}
+                    </p>
+                  ))}
+                </td>
+                <td className="px-6 py-1">
                   Rp{" "}
                   {new Intl.NumberFormat("id-ID").format(
                     transaksiItem.detail_transaksi.reduce(
@@ -275,30 +197,34 @@ const Transaksi = () => {
                     )
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="max-w-[50px] py-1">
                   {transaksiItem.status === "belum_bayar" ? (
                     <button
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
+                      className="from-[#FF3B30] bg-gradient-to-r to  to-[#FFB673]  hover:bg-gradient-to-r text-white font-semibold leading-3 py-2 px-2 text-xs rounded-md"
                       onClick={() => handleToggleStatus(transaksiItem)}
                     >
-                      Belum Bayar
+                      Belum
                     </button>
                   ) : (
                     <button
-                      className="bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
-                      disabled
+                      className="max-w-[50px] text-green-400 font-bold text-2xl rounded-md"
+                      onClick={() => handleToggleStatus(transaksiItem)}
                     >
-                      Lunas
+                      <AiFillCheckSquare />
                     </button>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
-                    onClick={() => handlePrint(transaksiItem)}
-                  >
-                    Print
-                  </button>
+                <td className="pr-3 py-1">
+                  {transaksiItem.status === "belum_bayar" ? (
+                    ""
+                  ) : (
+                    <button
+                      className="bg-slate-300 text-white font-bold py-2 px-4 rounded-md"
+                      onClick={() => handlePrint(transaksiItem)}
+                    >
+                      <BsFillPrinterFill />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

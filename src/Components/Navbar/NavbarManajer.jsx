@@ -1,71 +1,122 @@
-import React from "react";
-import { useEffect } from "react";
+import * as React from "react";
+import { MdNavigateNext } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import {BiCollection, BiLogOut} from "react-icons/bi";
-import {IoFastFoodSharp} from "react-icons/io5"
-import {TbReport, TbReportMoney} from "react-icons/tb";
+import { BiCollection, BiFoodMenu, BiUser, BiLogOut } from "react-icons/bi";
 
-function NavbarManajer() {
-  const navigate = useNavigate();
-  const userRole = "admin,manajer,kasir"
+const NavManager = [
+  {
+    id: "1",
+    icons: <BiCollection />,
+    nama: "Dasboard",
+    link: "/dashBoard-manajer",
+  },
+  {
+    id: "2",
+    icons: <BiFoodMenu />,
+    nama: "Laporan transaksi",
+    link: "/transaksi-manajer",
+  },
+  {
+    id: "3",
+    icons: <BiFoodMenu />,
+    nama: "Laporan ",
+    link: "/laporan",
+  },
+];
 
-  useEffect(() => {
-    //jika pengguna belum login, arahkan ke halaman login
-    if (!localStorage.getItem("logged")) {
-      navigate("/");
-    }
-  }, [navigate]);
-  const handleLogout = () => {  
-    //hapus data dari localStorage
-    localStorage.removeItem("logged");
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    localStorage.clear();
-    //navigasi ke halaman login
-    navigate("/");
+function NavbarAdmin() {
+  const navigate = useNavigate(); //fungsi usenavigate yang di definisikan menjadi variabel navigate
+  const [open, setOpen] = React.useState(true); // membuat state dengan nilai default false
+
+  const getButtonClasses = (pathname) => {
+    const commonClasses = `px-2 py-4 font-medium ease-out transition-colors hover:bg-opacity-50 hover:bg-blue-200 hover:pl-4 pl-2 hover:duration-100 text-sm flex items-center ${
+      !open && "justify-center text-lg"
+    }`;
+    const selectedClasses = `border-l-4 bg-neutral-100 border-blue-400 text-blue-500   `;
+    return pathname === window.location.pathname
+      ? `${commonClasses} ${selectedClasses}`
+      : commonClasses;
   };
+  const role = localStorage.getItem("user");
+  const name = localStorage.getItem("namauser");
+
+  //sesuaikan warna dengan yang anda inginkan
+  const text = "neutral-700";
+  const hover = "blue-200";
+  const green = "violet-700";
+  const backgound = "neutral-200";
 
   return (
-    <>
-    <aside className="bg-[#3F2E3E] h-full w-auto fixed flex flex-col border-spacing-3 rounded-lg">
-      <div className="font-bold text-xl text-[#F2E3DB] py-7 px-6 flex items-center">
-        <IoFastFoodSharp className="text-2xl" />
-        <span className="pl-3">Foodie Cafe </span>
-      </div>
-      <div className="flex-grow flex flex-col text-[#F2E3DB] capitalize">
-        <a
-          href="DashboardManajer"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
-        >
-          <BiCollection className="text-xl inline-block" />
-          <span className="pl-2">Dashboard</span>
-        </a>
-        <a
-          href="TransaksiManajer"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
-        >
-          <TbReportMoney className="text-xl inline-block" />
-          <span className="pl-2">Transaksi</span>
-        </a>
-        <a
-          href="Laporan"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
-        >
-          <TbReport className="text-xl inline-block" />
-          <span className="pl-2">Laporan</span>
-        </a>
-      </div>
-        <button
-        className="px-6 py-4 font-bold text-[#EFE1D1] text-xl w-full text-left hover:bg-[#A78295] hover:text-[#331D2C] focus:ring no-underline"
-        onClick={handleLogout}
+    <aside
+      className={` ${
+        open ? "w-48" : "w-20 "
+      } h-screen  px-2 bg-[#F9F8F8] text-sm  fixed flex flex-col border-spacing-3 rounded-r-lg text-${text}`}
+    >
+      <button
+        className={`p-2 right-0 mt-2 rounded-lg justify-end duration-200  bg-${backgound} w-fit ml-auto`}
+        onClick={() => setOpen(!open)}
       >
-        <BiLogOut className="text-xl inline-block" />
-        <span className="pl-2">Logout</span>
+        <div className="flex justify-center ">
+          <MdNavigateNext
+            className={`text-xl rotate-180   duration-300 ${
+              !open && "rotate-0"
+            }`}
+          />
+        </div>
       </button>
+      <img
+        src={open ? "/logo1.png" : "/logo2.png"}
+        alt=""
+        className={`mx-auto py-4 ${open ? "w-20" : "w-8"}`}
+      />
+      <div className={`border-b border-${green} mb-4`}></div>
+      <div
+        className={`${
+          !open && "text-center"
+        } flex-grow flex flex-col capitalize1`}
+      >
+        {NavManager.map((nav) => (
+          <a
+            key={nav.id}
+            href={nav.link}
+            className={getButtonClasses(`${nav.link}`)}
+          >
+            {nav.icons}
+            <span className="pl-2">{open && nav.nama} </span>
+          </a>
+        ))}
+      </div>
+      <div className={`border-b border-${green} `}></div>
+      <div
+        className={`flex justify-between items-center hover:bg-blue-200 p-2 rounded-md mb-10 ${
+          !open && "flex-col gap-2"
+        }`}
+      >
+        <div
+          className={`w-full flex justify-start gap-2 items-center ${
+            !open && "justify-center"
+          } `}
+        >
+          <BiUser className={`text-2xl w-8 h-8 bg-${backgound} rounded p-2`} />
+          {open && (
+            <div>
+              <p className="font-semibold text-base -mb-1">{name}</p>
+              <p className="font-medium text-xs text-neutral-400">{role}</p>
+            </div>
+          )}
+        </div>
+        <button
+          className="px-3 py-4 font-medium flex justify-center gap-2 hover:gap-4 rounded hover:bg-red-400 text-red-400 hover:text-white  duration-200"
+          onClick={() => {
+            localStorage.clear();
+            navigate("/");
+          }}
+        >
+          <BiLogOut className="text-xl rotate-180 inline-blockduration-150" />
+        </button>
+      </div>
     </aside>
-        
-    </>
-  )
+  );
 }
-export default NavbarManajer;
 
+export default NavbarAdmin;
