@@ -41,19 +41,16 @@ function NavbarAdmin() {
   const name = localStorage.getItem("namauser");
 
   //sesuaikan warna dengan yang anda inginkan
-  const text = "neutral-700";
-  const hover = "blue-200";
-  const green = "violet-700";
-  const backgound = "neutral-200";
+ 
 
   return (
     <aside
       className={` ${
         open ? "w-48" : "w-20 "
-      } h-screen  px-2 bg-[#F9F8F8] text-sm  fixed flex flex-col border-spacing-3 rounded-r-lg text-${text}`}
+      } h-screen  px-2 bg-[#F9F8F8] text-sm   flex flex-col border-spacing-3 rounded-r-lg text-neutral-800`}
     >
       <button
-        className={`p-2 right-0 mt-2 rounded-lg justify-end duration-200  bg-${backgound} w-fit ml-auto`}
+        className={`p-2 right-0 mt-2 rounded-lg justify-end duration-200  bg-neutral-200 w-fit ml-auto`}
         onClick={() => setOpen(!open)}
       >
         <div className="flex justify-center ">
@@ -69,7 +66,7 @@ function NavbarAdmin() {
         alt=""
         className={`mx-auto py-4 ${open ? "w-20" : "w-8"}`}
       />
-      <div className={`border-b border-${green} mb-4`}></div>
+      <div className={`border-b border-blue-500 mb-4`}></div>
       <div
         className={`${
           !open && "text-center"
@@ -86,7 +83,7 @@ function NavbarAdmin() {
           </a>
         ))}
       </div>
-      <div className={`border-b border-${green} `}></div>
+      <div className={`border-b border-blue-500 `}></div>
       <div
         className={`flex justify-between items-center hover:bg-blue-200 p-2 rounded-md mb-10 ${
           !open && "flex-col gap-2"
@@ -97,7 +94,7 @@ function NavbarAdmin() {
             !open && "justify-center"
           } `}
         >
-          <BiUser className={`text-2xl w-8 h-8 bg-${backgound} rounded p-2`} />
+          <BiUser className={`text-2xl w-8 h-8 bg-neutral-200 rounded p-2`} />
           {open && (
             <div>
               <p className="font-semibold text-base -mb-1">{name}</p>

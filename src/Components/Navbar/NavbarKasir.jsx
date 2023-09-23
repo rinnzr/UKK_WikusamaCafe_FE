@@ -22,6 +22,7 @@ const NavKasir = [
     nama: "History",
     link: "/transaksi",
   },
+
   {
     id: "3",
     icons: <BiFoodMenu />,
@@ -32,13 +33,15 @@ const NavKasir = [
 
 function NavbarAdmin() {
   const navigate = useNavigate(); //fungsi usenavigate yang di definisikan menjadi variabel navigate
-  const [open, setOpen] = React.useState(true); // membuat state dengan nilai default false
+  const [open, setOpen] = React.useState(
+    window.location.pathname !== "/Tambahtransaksi"
+  ); // membuat state dengan nilai default false dan ketika pathname Tambahtransaksi menjadi true
 
   const getButtonClasses = (pathname) => {
-    const commonClasses = `px-2 py-4 font-medium ease-out transition-colors hover:bg-opacity-50 hover:bg-${hover} hover:pl-4 pl-2 hover:text-${green}duration-100 text-sm flex items-center ${
+    const commonClasses = `px-2 py-4 font-medium ease-out transition-colors hover:bg-opacity-50 hover:bg-neutral-200 hover:pl-4 pl-2 hover:text-green-500duration-100 text-sm flex items-center ${
       !open && "justify-center text-lg"
     }`;
-    const selectedClasses = `border-l-4 bg-neutral-100 border-${green}  `;
+    const selectedClasses = `border-l-4 bg-neutral-100 border-green-500  `;
     return pathname === window.location.pathname
       ? `${commonClasses} ${selectedClasses}`
       : commonClasses;
@@ -46,26 +49,22 @@ function NavbarAdmin() {
   const role = localStorage.getItem("user");
   const name = localStorage.getItem("namauser");
 
-  //sesuaikan warna dengan yang anda inginkan
-  const text = "neutral-700";
-  const hover = "green-500";
-  const green = "green-500";
-  const backgound = "neutral-200";
-
   return (
     <aside
       className={` ${
         open ? "w-48" : "w-20 "
-      } h-screen  px-2 bg-white border-r border-${green} text-sm  fixed flex flex-col border-spacing-3 text-${text}`}
+      } h-screen  px-2 bg-white border-r border-green-500 text-sm  flex flex-col border-spacing-3 text-neutral-800`}
     >
       <button
-        className={`p-2 right-0 mt-2 rounded-lg justify-end duration-200  bg-${backgound} w-fit ml-auto`}
+        className={`p-2 right-0 mt-2 rounded-lg justify-end duration-200  bg-neutral-200 w-fit ml-auto ${
+          open === false && "w-full py-1"
+        }`}
         onClick={() => setOpen(!open)}
       >
         <div className="flex justify-center ">
           <MdNavigateNext
-            className={`text-xl rotate-180   duration-300 ${
-              !open && "rotate-0"
+            className={`text-xl rotate-180  ease-out duration-300 delay-200 ${
+              open === false && "-rotate-0 "
             }`}
           />
         </div>
@@ -75,7 +74,7 @@ function NavbarAdmin() {
         alt=""
         className={`mx-auto py-4 ${open ? "w-20" : "w-8"}`}
       />
-      <div className={`border-b border-${green} mb-4`}></div>
+      <div className={`border-b border-green-500 mb-4`}></div>
       <div
         className={`${
           !open && "text-center"
@@ -92,7 +91,7 @@ function NavbarAdmin() {
           </a>
         ))}
       </div>
-      <div className={`border-b border-${green} `}></div>
+      <div className={`border-b border-green-500 `}></div>
       <div
         className={`flex justify-between items-center hover:bg-neutral-200 p-2 rounded-md mb-10 ${
           !open && "flex-col gap-2"
@@ -103,7 +102,7 @@ function NavbarAdmin() {
             !open && "justify-center"
           } `}
         >
-          <BiUser className={`text-2xl w-8 h-8 bg-${backgound} rounded p-2`} />
+          <BiUser className={`text-2xl w-8 h-8 bg-neutral-200 rounded p-2`} />
           {open && (
             <div>
               <p className="font-semibold text-xs -mb-1">{name}</p>

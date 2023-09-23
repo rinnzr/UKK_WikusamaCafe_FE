@@ -5,7 +5,7 @@ import Menu from "./pages/admin/Menu";
 import User from "./pages/admin/User";
 import Meja from "./pages/admin/Meja";
 import DashboardKasir from "./pages/kasir/DashboardKasir";
-import Transaksi from "./pages/kasir/Transaksi/Transaksi";
+import Transaksi from "./pages/kasir/Transaksi/history";
 import TambahTransaksi from "./pages/kasir/TambahTransaksi";
 import DashboardManajer from "./pages/manajer/DashboardManajer";
 import TransaksiManajer from "./pages/manajer/Transaksi";

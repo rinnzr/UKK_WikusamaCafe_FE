@@ -154,9 +154,9 @@ function TambahTransaksi() {
 
   return (
     <div className="px-8">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="fixed right-0">
         {/* Tanggal Transaksi */}
-        <div className="bg-white fixed w-full gap-8 flex max-w-7xl">
+        <div className="bg-white sticky top-0 w-full gap-8 flex">
           <div className="grid  max-w-md  w-full grid-cols-2 py-3 ">
             {/* User */}
 
@@ -343,39 +343,38 @@ function TambahTransaksi() {
             {/* Tombol Submit */}
           </div>
         </div>
-
-        <div className="justify-center pt-56  grid pb-16 grid-cols-5 gap-4">
-          {menu.map((menu) => (
-            <>
-              <div className="bg-white w-full capitalize">
-                <img
-                  className="w-full object-cover h-40"
-                  src={imageURL + menu.gambar}
-                  alt={menu.gambar}
-                />
-                <article className="px-2 pb-2">
-                  <p className="font-medium py-2 text-xl h-16">
-                    {menu.nama_menu}
-                  </p>
-                  <p className="font-semibold text-neutral-400">
-                    Rp.{new Intl.NumberFormat("id-ID").format(menu.harga)}
-                  </p>
-                  <div className="flex mt-4 justify-between w-full ">
-                    <button
-                      type="button"
-                      onClick={() => handleAddToCart(menu.id_menu, 1)}
-                      className="from-[#F2E3DB]  bg-gradient-to-r to-[#c9a490] right-0 ml-auto w-fit px-5 text-neutral-800 tracking-widest font-bold py-4 rounded  "
-                      required
-                    >
-                      Pesan
-                    </button>
-                  </div>
-                </article>
-              </div>
-            </>
-          ))}
-        </div>
       </form>
+      <div className="justify-center pt-56  grid pb-16 grid-cols-5 gap-4">
+        {menu.map((menu) => (
+          <>
+            <div className="bg-white w-full capitalize">
+              <img
+                className="w-full object-cover h-40"
+                src={imageURL + menu.gambar}
+                alt={menu.gambar}
+              />
+              <article className="px-2 pb-2">
+                <p className="font-medium py-2 text-xl h-16">
+                  {menu.nama_menu}
+                </p>
+                <p className="font-semibold text-neutral-400">
+                  Rp.{new Intl.NumberFormat("id-ID").format(menu.harga)}
+                </p>
+                <div className="flex mt-4 justify-between w-full ">
+                  <button
+                    type="button"
+                    onClick={() => handleAddToCart(menu.id_menu, 1)}
+                    className="from-[#F2E3DB]  bg-gradient-to-r to-[#c9a490] right-0 ml-auto w-fit px-5 text-neutral-800 tracking-widest font-bold py-4 rounded  "
+                    required
+                  >
+                    Pesan
+                  </button>
+                </div>
+              </article>
+            </div>
+          </>
+        ))}
+      </div>
     </div>
   );
 }

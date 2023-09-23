@@ -41,10 +41,10 @@ function NavbarAdmin() {
   const [open, setOpen] = React.useState(true); // membuat state dengan nilai default false
 
   const getButtonClasses = (pathname) => {
-    const commonClasses = `px-2 py-4 font-medium ease-out transition-colors hover:bg-opacity-50 hover:bg-${hover} hover:pl-4 pl-2 hover:text-${orange}duration-100 text-sm flex items-center ${
+    const commonClasses = `px-2 py-4 font-medium ease-out transition-colors hover:bg-opacity-50 hover:bg-orange-200 hover:pl-4 pl-2 hover:text-orange-500 duration-100 text-sm flex items-center ${
       !open && "justify-center text-lg"
     }`;
-    const selectedClasses = `border-l-4 bg-neutral-100 border-${orange}  `;
+    const selectedClasses = `border-l-4 bg-neutral-100 border-orange-500   `;
     return pathname === window.location.pathname
       ? `${commonClasses} ${selectedClasses}`
       : commonClasses;
@@ -62,10 +62,10 @@ function NavbarAdmin() {
     <aside
       className={` ${
         open ? "w-48" : "w-20 "
-      } h-screen  px-2 bg-[#F9F8F8] text-sm  fixed flex flex-col border-spacing-3 rounded-r-lg text-${text}`}
+      } h-screen  px-2 bg-[#F9F8F8] text-sm  flex flex-col border-spacing-3 rounded-r-lg text-neutral-800`}
     >
       <button
-        className={`p-2 right-0 mt-2 rounded-lg justify-end duration-200  bg-${backgound} w-fit ml-auto`}
+        className={`p-2 right-0 mt-2 rounded-lg justify-end duration-200  bg-neutral-200 w-fit ml-auto`}
         onClick={() => setOpen(!open)}
       >
         <div className="flex justify-center ">
@@ -81,7 +81,7 @@ function NavbarAdmin() {
         alt=""
         className={`mx-auto py-4 ${open ? "w-20" : "w-8"}`}
       />
-      <div className={`border-b border-${orange} mb-4`}></div>
+      <div className={`border-b border-orange-500  mb-4`}></div>
       <div
         className={`${
           !open && "text-center"
@@ -98,9 +98,9 @@ function NavbarAdmin() {
           </a>
         ))}
       </div>
-      <div className={`border-b border-${orange} `}></div>
+      <div className={`border-b border-orange-500  `}></div>
       <div
-        className={`flex justify-between items-center hover:bg-${hover} p-2 rounded-md mb-10 ${
+        className={`flex justify-between items-center hover:bg-orange-200 p-2 rounded-md mb-10 ${
           !open && "flex-col gap-2"
         }`}
       >
@@ -109,7 +109,7 @@ function NavbarAdmin() {
             !open && "justify-center"
           } `}
         >
-          <BiUser className={`text-2xl w-8 h-8 bg-${backgound} rounded p-2`} />
+          <BiUser className={`text-2xl w-8 h-8 bg-neutral-200 rounded p-2`} />
           {open && (
             <div>
               <p className="font-semibold text-base -mb-1">{name}</p>
