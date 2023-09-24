@@ -14,7 +14,7 @@ const StrukPrint = ({ item }) => {
   };
 
   return (
-    <div className="struk-container pt-5 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
+    <div className="struk-container pt-5 pb-20  w-80 mx-auto rounded-lg px-5 text-sm ">
       <h2 className="text-center font-semibold text-base mb-4 ">
         <span className="flex text-sm w-fit mx-auto">
           <img src={"/logo1.png"} alt="" className={`mx-auto py-4 "w-20" `} />

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { MdNavigateNext } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   BiCollection,
   BiFoodMenu,
@@ -81,14 +81,14 @@ function NavbarAdmin() {
         } flex-grow flex flex-col capitalize1`}
       >
         {NavKasir.map((nav) => (
-          <a
+          <Link
             key={nav.id}
-            href={nav.link}
+            to={nav.link}
             className={getButtonClasses(`${nav.link}`)}
           >
             {nav.icons}
             <span className="pl-2">{open && nav.nama} </span>
-          </a>
+          </Link>
         ))}
       </div>
       <div className={`border-b border-green-500 `}></div>

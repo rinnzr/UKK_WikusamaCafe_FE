@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL, config } from "../../../config";
 import { format, parseISO } from "date-fns";
@@ -15,6 +14,7 @@ const history = () => {
   const [selectedTransaksi, setSelectedTransaksi] = useState(null);
   const componentRef = useRef();
 
+  console.log(selectedTransaksi);
   useEffect(() => {
     fetchTransaksi();
   }, []);
@@ -83,15 +83,14 @@ const history = () => {
       </>
     );
   };
-  console.log(sortedData);
   return (
     <div className="max-w-full py-0.52">
-      <h1 className="text-3xl  font-semibold text-gray-900 mb-6  flex justify-center">
-        History Transaksi
+      <h1 className="text-3xl  font-semibold text-gray-900 py-3  flex justify-center">
+        History Transaksi &nbsp; {localStorage.getItem("namauser")}
       </h1>
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg max-h-[90vh]  overflow-y-scroll  ">
         <table className="min-w-full divide-y text-xs divide-gray-200">
-          <thead className="bg-neutral-500 text-[10px] sticky top-1  text-center w-full">
+          <thead className="bg-neutral-500 text-[10px] sticky top-0  text-center w-full">
             <tr>
               <th className="py-3 px-2 text-center  font-medium text-[#FFFF] uppercase max-w-fit tracking-wider">
                 No
@@ -236,9 +235,12 @@ const history = () => {
       >
         <div className="mx-auto w-fit bg-white">
           {selectedTransaksi && (
-            <div id="print-area" className="max-w-xl">
+            <div
+              id="print-area"
+              className="max-w-xl max-h-[100vh] py-10 overflow-y-scroll"
+            >
               <StrukPrint item={selectedTransaksi} ref={componentRef} />
-              <PrintButton />
+              <PrintButton nama={selectedTransaksi.nama_pelanggan} />
             </div>
           )}
         </div>

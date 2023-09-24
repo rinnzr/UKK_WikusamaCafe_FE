@@ -30,7 +30,7 @@ export default function Layout({ children }) {
         <aside className=" w-fit">
           {isSidebarVisible && pages[array.indexOf(roleUpperCase)]}
         </aside>
-        <main className="w-full px-4 overflow-y-scroll  ">{children}</main>
+        <main className="w-full px-4">{children}</main>
       </section>
     </>
   );

@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Login from "./pages/Login";
 import DashboardAdmin from "./pages/admin/DashboardAdmin";
 import Menu from "./pages/admin/Menu";
@@ -14,9 +14,6 @@ import "./App.css";
 import Layout from "./Components/layout";
 
 function App() {
-  const location = useLocation();
-  console.log(location.pathname);
-
   return (
     <>
       <div className="bg-white h-full min-h-screen text-[Poppins]">
