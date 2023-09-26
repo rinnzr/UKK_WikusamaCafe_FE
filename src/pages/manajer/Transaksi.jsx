@@ -1,101 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseURL, config } from "../../config";
-import { useReactToPrint } from "react-to-print";
-import Modal from "react-modal";
-import { IoFastFoodSharp } from "react-icons/io5";
-import { FiPrinter } from "react-icons/fi"
-import PrintButton from "../kasir/Transaksi/PrintButton";
+import { format, parseISO } from "date-fns";
+import { AiFillCheckSquare, AiOutlineClose } from "react-icons/ai";
 
-
-const StrukPrint = ({ transaksiItem }) => {
-  return (
-    <div className="struk-container pt-10 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
-      <h2 className="text-center my-4 font-semibold text-base ">
-        <span className=" flex text-sm w-fit mx-auto">
-          {<IoFastFoodSharp />} <p>Foodie Cafe</p>{" "}
-        </span>
-        Struk Transaksi
-      </h2>
-
-      {/* Tampilkan informasi transaksi */}
-      <p>
-        Date:{" "}
-        {new Intl.DateTimeFormat("id-ID").format(
-          new Date(transaksiItem.tgl_transaksi)
-        )}
-      </p>
-      <p>Name Customer: {transaksiItem.nama_pelanggan}</p>
-      <p>No: {transaksiItem.meja.nomor_meja}</p>
-      <p className="mb-4">Chasier: {transaksiItem.user.nama_user}</p>
-      <p>-------------------------------</p>
-      <h3>Menu:</h3>
-      <ul>
-        {transaksiItem.detail_transaksi.map((detailItem) => (
-          <li
-            key={detailItem.id_detail_transaksi}
-            className="flex justify-between text-sm"
-          >
-            <ul>
-              {detailItem.menu.nama_menu} ({detailItem.jumlah})
-            </ul>
-            <ul> {detailItem.menu.harga}</ul>
-          </li>
-        ))}
-      </ul>
-      <p>-------------------------------</p>
-      <p className="flex justify-between">
-        SubTotal:{" "}
-        <span>
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                total + detailItem.menu.harga * detailItem.jumlah,
-              0
-            )
-          )}
-        </span>
-      </p>
-      <p className="flex justify-between">
-        PPN 10%:{" "}
-        <span>
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah *0.1),
-              0
-            )
-          )}
-        </span>
-
-      </p>
-      
-      <p className="flex justify-between">
-        Total:{" "}
-        <span>
-          Rp
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah*0.1) + (detailItem.menu.harga * detailItem.jumlah),
-              0
-            )
-          )}
-        </span>
-
-      </p>
-      <p className="text-center mt-10 text-lg font-semibold">Great Day Start With Coffe</p>
-    
-    </div>
-  );
-};
-
-// DAFTAR TRANSAKSI
-const TransaksiManajer = () => {
+const Transaksi = () => {
   const [transaksi, setTransaksi] = useState([]);
-  const [showPrintModal, setShowPrintModal] = useState(false);
-  const [selectedTransaksi, setSelectedTransaksi] = useState(null);
-  const componentRef = useRef();
 
   useEffect(() => {
     fetchTransaksi();
@@ -110,193 +20,156 @@ const TransaksiManajer = () => {
     }
   };
 
-  const handleToggleStatus = async (transaksiItem) => {
-    const updatedTransaksi = {
-      ...transaksiItem,
-      status: transaksiItem.status === "belum_bayar" ? "lunas" : "belum_bayar",
-    };
+  const sortedData = transaksi
+    .sort((a, b) => {
+      ///untuk mengurutkan dari yang terbaru
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
+    })
+    .filter(
+      (
+        item //memfilter data dengan jumlah harga <= nol tidak akan di tampilkan
+      ) =>
+        item.detail_transaksi.some(
+          (detailItem) => detailItem.jumlah * detailItem.menu.harga > 0
+        )
+    );
 
-    try {
-      await axios.put(
-        baseURL + "/transaksi/" + transaksiItem.id_transaksi,
-        updatedTransaksi,
-        config
-      );
-      fetchTransaksi();
-    } catch (error) {
-      console.error(error);
-    }
+  const formatISODate = (isoDateString) => {
+    const dateObj = parseISO(isoDateString);
+    const formattedDate = format(dateObj, "dd/MM/yyyy");
+    const formattedTime = format(dateObj, "HH:mm:ss");
+    return (
+      <>
+        <p>
+          {formattedDate}&nbsp;
+          {formattedTime}
+        </p>
+      </>
+    );
   };
-
-  const handlePrint = (transaksiItem) => {
-    setSelectedTransaksi(transaksiItem);
-    setShowPrintModal(true);
-  };  
-
-  const handleAfterPrint = () => {
-    setShowPrintModal(false);
-  };
-
-  const handlePrintButtonClick = useReactToPrint({
-    content: () => componentRef.current,
-    onAfterPrint: handleAfterPrint,
-  });
-
   return (
-    <div className="max-w-full mx-4 ml-56 py-7 sm:px-3 lg:px-">
-      <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
-        Daftar Transaksi
+    <div className="max-w-full py-0.52">
+      <h1 className="text-3xl  font-semibold text-gray-900 py-3  flex justify-center">
+        Transaksi Transaksi &nbsp; {localStorage.getItem("namauser")}
       </h1>
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg max-h-[90vh]  overflow-y-scroll  ">
+        <table className="min-w-full divide-y text-xs divide-gray-200">
+          <thead className="bg-neutral-500 text-[10px] sticky top-0  text-center w-full">
             <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+              <th className="py-3 px-2 text-center  font-medium text-[#FFFF] uppercase max-w-fit tracking-wider">
                 No
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Tanggal Transaksi
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+              <th className="py-3 max-w-[4.4rem]  font-medium text-[#FFFF] uppercase tracking-wider">
                 Nama Pelanggan
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+              <th className=" py-3 text-center max-w-fit  font-medium text-[#FFFF] uppercase tracking-wider">
+                Chasier
+              </th>
+              <th className="px-2 py-3 font-medium text-[#FFFF] uppercase max-w-fit tracking-wider">
+                Waktu Transaksi
+              </th>
+              <th className="py-3 text-center  font-medium text-[#FFFF]  uppercase max-w-[50px] tracking-wider">
                 No Meja
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                User
+              <th className="py-3  font-medium text-[#FFFF] uppercase tracking-wider">
+                Menu & jumlah
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Menu
+              <th className="py-3 px-2 font-medium text-[#FFFF] uppercase tracking-wider">
+                Harga Satuan
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+              <th className="px-6 py-3 font-medium text-[#FFFF] uppercase tracking-wider">
                 Total
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Status
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Print Struk
+              <th className=" font-medium text-[#FFFF] uppercase tracking-wider">
+                Status Bayar
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {transaksi.map((transaksiItem, index) => (
-              <tr key={transaksiItem.id_transaksi}>
-                <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {new Intl.DateTimeFormat("id-ID").format(
-                    new Date(transaksiItem.tgl_transaksi)
-                  )}
+          <tbody>
+            {sortedData.map((item, index) => (
+              <tr
+                key={item.id_transaksi}
+                className={
+                  index % 2 === 0 ? "bg-neutral-200 bg-opacity-30" : ""
+                }
+              >
+                <td className="py-0.5 text-center ">{index + 1}</td>
+                <td className="py-0.5 max-w-[4rem] truncate text-center">
+                  {item.nama_pelanggan}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {transaksiItem.nama_pelanggan}
+                <td className="py-0.5 text-center ">{item.user.nama_user}</td>
+                <td className="py-0.5 text-center">
+                  <p>{formatISODate(item.updatedAt)}</p>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {transaksiItem.meja.nomor_meja}
+                <td className="px-6 py-0.5 text-center">
+                  {item.meja.nomor_meja}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {transaksiItem.user.nama_user}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+
+                <td className="py-0.5">
                   <ul>
-                    {transaksiItem.detail_transaksi.map((detailItem) => (
-                      <li key={detailItem.id_detail_transaksi}>
-                        {detailItem.menu.nama_menu} ({detailItem.jumlah})
-                      </li>
-                    ))}
+                    <>
+                      {item.detail_transaksi.map(
+                        (detailItem) =>
+                          detailItem.jumlah !== 0 && (
+                            <li
+                              className="py-0.5"
+                              key={detailItem.id_detail_transaksi}
+                            >
+                              <span className="font-normal">
+                                -{detailItem.menu.nama_menu}
+                              </span>
+                              {detailItem.jumlah}
+                            </li>
+                          )
+                      )}
+                    </>
                   </ul>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  Rp{" "}
+                <td>
+                  {item.detail_transaksi.map(
+                    (detailItem, idx) =>
+                      detailItem.jumlah !== 0 && (
+                        <p
+                          key={detailItem.id_detail_transaksi}
+                          className="py-0.5"
+                        >
+                          Rp.
+                          {new Intl.NumberFormat("id-ID").format(
+                            detailItem.menu.harga
+                          )}
+                        </p>
+                      )
+                  )}
+                </td>
+                <td className="px-6 py-0.5">
+                  Rp
                   {new Intl.NumberFormat("id-ID").format(
-                    transaksiItem.detail_transaksi.reduce(
+                    item.detail_transaksi.reduce(
                       (total, detailItem) =>
                         total + detailItem.menu.harga * detailItem.jumlah,
                       0
                     )
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {transaksiItem.status === "belum_bayar" ? (
-                    <button
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
-                      onClick={() => handleToggleStatus(transaksiItem)}
-                    >
-                      Belum Bayar
-                    </button>
+                <td className="max-w-[50px] py-0.5">
+                  {item.status === "belum_bayar" ? (
+                    <p className="bg-red-400 flex items-center gap-4 mx-auto text-white p-1 rounded-sm">
+                      <AiOutlineClose />
+                      belum bayar
+                    </p>
                   ) : (
-                    <button
-                      className="bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
-                      disabled
-                    >
-                      Lunas
-                    </button>
+                    <p className="max-w-[50px] text-green-400  flex items-center gap-4 mx-auto text-2xl rounded-md">
+                      <AiFillCheckSquare />
+                    </p>
                   )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
-                    onClick={() => handlePrint(transaksiItem)}
-                  >
-                   <FiPrinter/>
-                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {/* Modal Print */}
-     {/* Modal Print */}
-     <Modal
-        isOpen={showPrintModal}
-        overlayRef={false}
-        onRequestClose={() => setShowPrintModal(false)}
-        className="w-fit items-center h-full flex flex-col justify-center  border-neutral-600 mx-auto"
-      >
-        <div className="mx-auto w-fit bg-white">
-          {selectedTransaksi && (
-            <div id="print-area" className="max-w-xl">
-              <StrukPrint
-                transaksiItem={selectedTransaksi}
-                ref={componentRef}
-              />
-              <PrintButton />
-            </div>
-          )}
-        </div>
-      </Modal>
     </div>
   );
 };
 
-export default TransaksiManajer;
+export default Transaksi;

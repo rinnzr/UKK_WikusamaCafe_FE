@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns";
 import Modal from "react-modal";
 import { AiFillCheckSquare, AiOutlineClose } from "react-icons/ai";
 import { BsFillPrinterFill } from "react-icons/bs";
-import PrintButton from "./PrintButton";
+import PrintButton from "../../../Components/PrintButton";
 import StrukPrint from "./print";
 
 const history = () => {
