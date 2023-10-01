@@ -50,7 +50,7 @@ const Transaksi = () => {
   return (
     <div className="max-w-full py-0.52">
       <h1 className="text-3xl  font-semibold text-gray-900 py-3  flex justify-center">
-        Transaksi Transaksi &nbsp; {localStorage.getItem("namauser")}
+        Transaksi&nbsp; {localStorage.getItem("namauser")}
       </h1>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg max-h-[90vh]  overflow-y-scroll  ">
         <table className="min-w-full divide-y text-xs divide-gray-200">

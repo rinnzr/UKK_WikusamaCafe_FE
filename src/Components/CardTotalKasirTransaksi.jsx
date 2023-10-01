@@ -14,17 +14,16 @@ const CardTotalKasirTransaksi = ({ namaKasir, jumlahTransaksi, idx }) => {
       className={`flex justify-between w-full  border rounded-lg border-neutral-300 items-center p-2 ${backgroundColorClass}`}
     >
       <div>
-        <p className="text-red text-2xl font-semibold text-neutral-600 capitalize">
+        <p className="text-red text-xl font-semibold text-neutral-600 capitalize">
           {namaKasir}
         </p>
-        <p className="text-neutral-400 font-medium -mt-1">
-          {" "}
+        <p className="text-neutral-400 font-medium text-sm -mt-1">
           Kasir: &nbsp;{idx}
         </p>
       </div>
-      <div className="bg-white text-3xl w-24 h-24 rounded-md font-semibold flex flex-col items-center justify-center">
+      <div className="bg-white text-xl w-16 h-16 rounded-md font-semibold flex flex-col items-center justify-center">
         <p> {jumlahTransaksi}</p>
-        <p className="text-[10px]">PENJUALAN</p>
+        <p className="text-[8px]">PENJUALAN</p>
       </div>
     </div>
   );

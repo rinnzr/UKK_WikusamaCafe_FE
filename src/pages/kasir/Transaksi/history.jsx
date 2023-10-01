@@ -166,7 +166,7 @@ const history = () => {
                 </td>
                 <td>
                   {item.detail_transaksi.map(
-                    (detailItem, idx) =>
+                    (detailItem) =>
                       detailItem.jumlah !== 0 && (
                         <p
                           key={detailItem.id_detail_transaksi}

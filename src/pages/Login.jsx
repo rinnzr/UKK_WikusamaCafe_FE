@@ -42,11 +42,11 @@ function Login() {
     <>
       <div
         className="flex justify-center items-center w-screen h-screen"
-        style={{ backgroundImage: 'url("/bg_login.png")' }}
+        style={{ backgroundImage: 'url("/bg-login.webp")', }}
       >
         <div className="flex flex-col w-full  h-full p-6 text-neutral-700 rounded-md justify-center  ">
           <div className="bg-[#fafafa] max-w-7xl flex  items-center w-full mx-auto  py-16 rounded-xl px-12">
-            <img src="/login_image.jpg" alt="" className="w-1/2 h-fit " />
+            <img src="/login_image.webp" alt="" className="w-1/2 h-fit " />
             <div className="bg-[#fafafa] w-1/2 mx-auto rounded-xl px-12">
               <div className="mb-8 text-center ">
                 <img src="/logo1.png" alt="" className="w-16 mx-auto" />
