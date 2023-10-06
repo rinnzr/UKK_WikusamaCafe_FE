@@ -138,7 +138,7 @@ function User() {
     <div className=" flex w-full pr-4 ">
       <div className="w-full h-screen">
         {/* title */}
-        <h1 className="flex justify-center font-medium text-5xl">User List</h1>
+        <h1 className="flex justify-center font-medium text-3xl">User</h1>
 
         <div className="flex justify-content-between align-items-center">
           {/* search form*/}

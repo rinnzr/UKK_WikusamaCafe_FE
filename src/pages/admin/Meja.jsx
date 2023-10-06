@@ -150,12 +150,12 @@ export default class Meja extends React.Component {
         <div className="w-full h-screen">
           {/* <Sidebar /> */}
           <div className=" overflow-x-auto sm:rounded-lg">
-          <h1 className="flex justify-center font-medium text-5xl">Meja List</h1>
-              <button className="hover:bg-green-500 float-right bg-green-600 text-white font-bold uppercase text-sm px-4 py-3 mb-2 rounded-md outline-none ease-linear transition-all duration-150" type="button" onClick={() => this.Add()}>
+          <h1 className="flex justify-center font-medium text-3xl mt-3">Meja </h1>
+              <button className="hover:bg-green-500 float-right bg-green-600 text-gray-50 font-bold uppercase text-sm px-4 py-3 mb-2 rounded-md outline-none ease-linear transition-all duration-150" type="button" onClick={() => this.Add()}>
                 Tambah Meja
               </button>
             <table class="min-w-full text-sm text-left text-gray-700">
-              <thead class="text-xs text-gray-100 uppercase bg-[#F0997D]">
+              <thead class="text-xs text-gray-100 uppercase bg-amber-500">
                 <tr className="text-base">
                   <th scope="col" className="px-6 py-3">
                     Nomor Meja
@@ -168,13 +168,13 @@ export default class Meja extends React.Component {
                   <div id="dropdown" class="z-10 hidden fixed bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
                     <ul class="py-2 text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton">
                       <li>
-                        <a href="#" onClick={() => this.getMeja()} class="block px-4 py-2  hover:bg-gray-600 hover:text-white">Tampilkan Semua</a>
+                        <a href="#" onClick={() => this.getMeja()} class="block px-4 py-2  hover:bg-gray-600 hover:text-gray-50">Tampilkan Semua</a>
                       </li>
                       <li>
-                        <a href="#" onClick={() => this.getMejaStatus("terisi")} className="block px-4 py-2  hover:bg-gray-600 hover:text-white">terisi</a>
+                        <a href="#" onClick={() => this.getMejaStatus("terisi")} className="block px-4 py-2  hover:bg-gray-600 hover:text-gray-50">terisi</a>
                       </li>
                       <li>
-                        <a href="#" onClick={() => this.getMejaStatus("kosong")} className="block px-4 py-2  hover:bg-gray-600 hover:text-white">kosong</a>
+                        <a href="#" onClick={() => this.getMejaStatus("kosong")} className="block px-4 py-2  hover:bg-gray-600 hover:text-gray-50">kosong</a>
                       </li>
                     </ul>
                   </div>
@@ -185,7 +185,7 @@ export default class Meja extends React.Component {
               </thead>
               <tbody>
                 {this.state.meja.map((item) => (
-                  <tr className="bg-orange-200 border-b font-sans  border-gray-700 hover:bg-orange-100" key={item.id_meja}>
+                  <tr className="bg-amber-100 border-b font-sans  border-gray-700" key={item.id_meja}>
                     <td className="px-6 py-4">
                       {item.nomor_meja}
                     </td>

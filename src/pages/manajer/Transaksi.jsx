@@ -12,7 +12,7 @@ const StrukPrint = ({ transaksiItem }) => {
   return (
     <div className="struk-container pt-10 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
       <h2 className="text-center my-4 font-semibold text-base ">
-        <span className=" flex text-sm w-fit mx-auto">
+        <span className=" flex text-sm w-fit mx-auto mb-2">
           {<IoFastFoodSharp />} <p>Foodie Cafe</p>{" "}
         </span>
         Struk Transaksi
@@ -25,12 +25,11 @@ const StrukPrint = ({ transaksiItem }) => {
           new Date(transaksiItem.tgl_transaksi)
         )}
       </p>
-      <p>Name Customer: {transaksiItem.nama_pelanggan}</p>
-      <p>No: {transaksiItem.meja.nomor_meja}</p>
-      <p className="mb-4">Chasier: {transaksiItem.user.nama_user}</p>
-      <p>-------------------------------</p>
-      <h3>Menu:</h3>
-      <ul>
+      <p>Customer: {transaksiItem.nama_pelanggan}</p>
+      <p>No Meja  : {transaksiItem.meja.nomor_meja}</p>
+      <p className="">Chasier: {transaksiItem.user.nama_user}</p>
+      <p>------------------------------------</p>
+      <ul className="justify-between">
         {transaksiItem.detail_transaksi.map((detailItem) => (
           <li
             key={detailItem.id_detail_transaksi}
@@ -39,15 +38,24 @@ const StrukPrint = ({ transaksiItem }) => {
             <ul>
               {detailItem.menu.nama_menu} ({detailItem.jumlah})
             </ul>
-            <ul> {detailItem.menu.harga}</ul>
+           
+            <ul>Rp{" "}
+                  {new Intl.NumberFormat("id-ID").format(
+                    transaksiItem.detail_transaksi.reduce(
+                      (total, detailItem) =>
+                        total + detailItem.menu.harga * detailItem.jumlah,
+                      0
+                    )
+                  )}</ul>
+                  
           </li>
         ))}
       </ul>
-      <p>-------------------------------</p>
+      <p>------------------------------------</p>
       <p className="flex justify-between">
-        SubTotal:{" "}
+        Subtotal:{" "}
         <span>
-          {new Intl.NumberFormat("id-ID").format(
+          Rp{new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
               (total, detailItem) =>
                 total + detailItem.menu.harga * detailItem.jumlah,
@@ -59,33 +67,34 @@ const StrukPrint = ({ transaksiItem }) => {
       <p className="flex justify-between">
         PPN 10%:{" "}
         <span>
-          {new Intl.NumberFormat("id-ID").format(
+          Rp{new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
               (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah *0.1),
+                total + detailItem.menu.harga * detailItem.jumlah * 0.1,
               0
             )
           )}
         </span>
-
       </p>
-      
-      <p className="flex justify-between">
+
+      <p className="flex justify-between mt-3 font-bold text-lg">
         Total:{" "}
         <span>
           Rp
           {new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
               (total, detailItem) =>
-                (total + detailItem.menu.harga * detailItem.jumlah*0.1) + (detailItem.menu.harga * detailItem.jumlah),
+                total +
+                detailItem.menu.harga * detailItem.jumlah * 0.1 +
+                detailItem.menu.harga * detailItem.jumlah,
               0
             )
           )}
         </span>
-
       </p>
-      <p className="text-center mt-10 text-lg font-semibold">Great Day Start With Coffe</p>
-    
+      <p className="text-center mt-10 text-lg font-semibold">
+        Great Day Start With Coffe
+      </p>
     </div>
   );
 };
@@ -145,10 +154,10 @@ const TransaksiManajer = () => {
   return (
     <div className="flex pr-4 w-full ">
       <div className="w-full h-full">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-6 flex justify-center">
+      <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
         Daftar Transaksi
       </h1>
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <div className="shadow overflow-y-scroll h-[80vh] border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

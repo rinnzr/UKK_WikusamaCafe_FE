@@ -109,7 +109,7 @@ function Login() {
           </form>
         </div>
       </div>
-<p className="-mt-8 text-center text-black text-opacity-40 font-semibold">Dibuat <span>oleh orin zahara 2023</span></p>
+<p className="-mt-8 text-center text-black text-opacity-40 font-semibold">orin zahara 2023</p>
 
     </>
   );

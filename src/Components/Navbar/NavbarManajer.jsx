@@ -5,10 +5,12 @@ import {BiCollection, BiLogOut} from "react-icons/bi";
 import {IoFastFoodSharp} from "react-icons/io5"
 import {MdOutlineNoFood } from "react-icons/md";
 import {TbReport, TbReportMoney} from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 function NavbarManajer() {
   const navigate = useNavigate();
   const userRole = "admin,manajer,kasir"
+  const active = window.location.pathname
 
   useEffect(() => {
     //jika pengguna belum login, arahkan ke halaman login
@@ -18,43 +20,48 @@ function NavbarManajer() {
   }, [navigate]);
   const handleLogout = () => {  
     //hapus data dari localStorage
-    localStorage.removeItem("logged");
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+   
     localStorage.clear();
     //navigasi ke halaman login
     navigate("/");
-  };
+  }; 
 
   return (
     <>
-    <aside className="bg-[#3F2E3E] h-full w-auto fixed flex flex-col border-spacing-3">
-      <div className="font-bold text-xl text-[#F2E3DB] py-7 px-6 flex items-center">
+    <aside className="bg-yellow-950 h-full w-auto fixed flex flex-col border-spacing-3 border-r border-neutral-700">
+    <div className="font-bold border-b mb-10 text-xl text-neutral-50 py-7 px-6 flex items-center">
         <MdOutlineNoFood className="text-2xl" />
         <span className="pl-3">Foodie Cafe </span>
       </div>
-      <div className="flex-grow flex flex-col text-[#F2E3DB] capitalize">
-        <a
-          href="DashboardManajer"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+      <div className="flex-grow flex flex-col text-gray-50 capitalize">
+        <Link
+          to="DashboardManajer"
+          className={` ${active==='/DashboardManajer'&&'bg-orange-200 text-neutral-700'} px-6 py-5 text-sm`}
         >
           <BiCollection className="text-xl inline-block" />
           <span className="pl-2">Dashboard</span>
-        </a>
-        <a
-          href="TransaksiManajer"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+        </Link>
+        <Link
+          to="TransaksiManajer"
+          className={` ${active==='/TransaksiManajer'&&'bg-orange-200 text-neutral-700'} px-6 py-5 text-sm`}
         >
           <TbReportMoney className="text-xl inline-block" />
           <span className="pl-2">Transaksi</span>
-        </a>
-        <a
-          href="Laporan"
-          className="px-6 py-4 font-medium text-base transition-colors duration-300 transform hover:bg-[#e0b0c9] hover:text-[#331D2C] hover:rounded-lg"
+        </Link>
+        <Link
+          to="Laporan"
+          className={` ${active==='/Laporan'&&'bg-orange-200 text-neutral-700'} px-6 py-5 text-sm`}
         >
           <TbReport className="text-xl inline-block" />
           <span className="pl-2">Laporan</span>
-        </a>
+        </Link>
+        <Link
+          to="LaporanTgl"
+          className={` ${active==='/LaporanTgl'&&'bg-orange-200 text-neutral-700'} px-6 py-5 text-sm`}
+        >
+          <TbReport className="text-xl inline-block" />
+          <span className="pl-2">Laporan Tanggal</span>
+        </Link>
       </div>
         <button
         className="px-6 py-4 font-bold text-[#EFE1D1] text-xl w-full text-left hover:bg-[#A78295] hover:text-[#331D2C] focus:ring no-underline"

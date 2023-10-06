@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-// import SidebarAdmin from "./Components/SidebarAdmin"
 import Login from "./pages/Login";
 import DashboardAdmin from "./pages/admin/DashboardAdmin";
 import Menu from "./pages/admin/Menu";
@@ -11,6 +10,7 @@ import TambahTransaksi from "./pages/kasir/TambahTransaksi";
 import DashboardManajer from "./pages/manajer/DashboardManajer";
 import TransaksiManajer from "./pages/manajer/Transaksi";
 import Laporan from "./pages/manajer/Laporan";
+import LaporanTgl from "./pages/manajer/LaporanTgl";
 import "./App.css";
 import Layout from "./Components/layout";
 
@@ -22,7 +22,6 @@ function App() {
     <>
       <div className="App bg-[#EFE1D1] h-full min-h-screen text-[Poppins]">
         {/* agar login tidak menampilkan sidebar */}
-        {/* {location.pathname !== '/Login' && location.pathname !== '*' && <SidebarAdmin />} */}
         {location.pathname !== "/" && location.pathname !== "*" && <Layout />}
 
         {/* route utama */}
@@ -49,6 +48,7 @@ function App() {
               <Route path="DashboardManajer" element={<DashboardManajer />} />
               <Route path="TransaksiManajer" element={<TransaksiManajer />} />
               <Route path="Laporan" element={<Laporan />} />
+              <Route path="LaporanTgl" element={<LaporanTgl />} />
             </Routes>
           </Layout>
         </div>

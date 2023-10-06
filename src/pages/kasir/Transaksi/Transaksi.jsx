@@ -6,6 +6,7 @@ import { useReactToPrint } from "react-to-print";
 import Modal from "react-modal";
 import PrintButton from "./PrintButton";
 import { IoFastFoodSharp } from "react-icons/io5";
+import { FiPrinter } from "react-icons/fi"
 import { filter } from "@chakra-ui/react";
 
 // STRUK
@@ -13,7 +14,7 @@ const StrukPrint = ({ transaksiItem }) => {
   return (
     <div className="struk-container pt-10 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
       <h2 className="text-center my-4 font-semibold text-base ">
-        <span className=" flex text-sm w-fit mx-auto">
+        <span className=" flex text-sm w-fit mx-auto mb-2">
           {<IoFastFoodSharp />} <p>Foodie Cafe</p>{" "}
         </span>
         Struk Transaksi
@@ -26,12 +27,11 @@ const StrukPrint = ({ transaksiItem }) => {
           new Date(transaksiItem.tgl_transaksi)
         )}
       </p>
-      <p>Name Customer: {transaksiItem.nama_pelanggan}</p>
-      <p>No: {transaksiItem.meja.nomor_meja}</p>
-      <p className="mb-4">Chasier: {transaksiItem.user.nama_user}</p>
-      <p>-------------------------------</p>
-      <h3>Menu:</h3>
-      <ul>
+      <p>Customer: {transaksiItem.nama_pelanggan}</p>
+      <p>No Meja  : {transaksiItem.meja.nomor_meja}</p>
+      <p className="">Chasier: {transaksiItem.user.nama_user}</p>
+      <p>------------------------------------</p>
+      <ul className="justify-between">
         {transaksiItem.detail_transaksi.map((detailItem) => (
           <li
             key={detailItem.id_detail_transaksi}
@@ -40,15 +40,24 @@ const StrukPrint = ({ transaksiItem }) => {
             <ul>
               {detailItem.menu.nama_menu} ({detailItem.jumlah})
             </ul>
-            <ul> {detailItem.menu.harga}</ul>
+           
+            <ul>Rp{" "}
+                  {new Intl.NumberFormat("id-ID").format(
+                    transaksiItem.detail_transaksi.reduce(
+                      (total, detailItem) =>
+                        total + detailItem.menu.harga * detailItem.jumlah,
+                      0
+                    )
+                  )}</ul>
+                  
           </li>
         ))}
       </ul>
-      <p>-------------------------------</p>
+      <p>------------------------------------</p>
       <p className="flex justify-between">
-        SubTotal:{" "}
+        Subtotal:{" "}
         <span>
-          {new Intl.NumberFormat("id-ID").format(
+          Rp{new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
               (total, detailItem) =>
                 total + detailItem.menu.harga * detailItem.jumlah,
@@ -60,7 +69,7 @@ const StrukPrint = ({ transaksiItem }) => {
       <p className="flex justify-between">
         PPN 10%:{" "}
         <span>
-          {new Intl.NumberFormat("id-ID").format(
+          Rp{new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
               (total, detailItem) =>
                 total + detailItem.menu.harga * detailItem.jumlah * 0.1,
@@ -70,7 +79,7 @@ const StrukPrint = ({ transaksiItem }) => {
         </span>
       </p>
 
-      <p className="flex justify-between">
+      <p className="flex justify-between mt-3 font-bold text-lg">
         Total:{" "}
         <span>
           Rp
@@ -164,7 +173,7 @@ const Transaksi = () => {
       const filteredData = transaksi.filter(
         (item) =>
           item.user.nama_user.replace(
-            item. user.nama_user,
+            item.user.nama_user,
             `"${item.user.nama_user}"`
           ) === localStorage.getItem("namauser")
       );
@@ -174,65 +183,65 @@ const Transaksi = () => {
   }, [transaksi]);
 
   return (
-    <div className="max-w-full lg:px-8">
-      <h1 className="text-3xl font-semibold text-gray-900 mb-6  flex justify-center">
+    <div className="max-w-full lg:px-8 h-screen overflow-hidden">
+      <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
         Daftar Transaksi
       </h1>
-      <div className="shadow overflow-y-scroll sm:rounded-lg">
-        <table className="min-w-full">
+      <div className="shadow sm:rounded-lg overflow-y-scroll h-[90vh]">
+        <table className="min-w-full  ">
           <thead className="bg-[#3F2305]">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 No
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 Tanggal Transaksi
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 Nama Pelanggan
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 No Meja
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 User
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 Menu
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 Total
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 Status
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-[#FFFF] uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
               >
                 Struk
               </th>
@@ -308,7 +317,7 @@ const Transaksi = () => {
                       className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
                       onClick={() => handlePrint(transaksiItem)}
                     >
-                      Print
+                      <FiPrinter />
                     </button>
                   ) : (
                     ""

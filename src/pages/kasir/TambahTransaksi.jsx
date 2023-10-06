@@ -50,17 +50,12 @@ function TambahTransaksi() {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(baseURL + "/user/kasir", config);
       let options = {
         id_user: localStorage.getItem("id_user"),
         nama_user: localStorage.getItem("namauser"),
       };
 
-      setUser(JSON.parse(JSON.stringify(options)));
-
-      // mejaOptions = options
-
-      // console.log("options >>> ", mejaOptions)
+      setUser(options);
     } catch (error) {
       console.error(error);
     }
@@ -160,15 +155,16 @@ function TambahTransaksi() {
     setTotalHarga(total);
   }, [detailTransaksi, menu]);
 
-  return (
-    <div className="overflow-auto mt-5">
-      <h1 className="flex justify-center font-semibold text-3xl">
-        Tambah Transaksi
-      </h1>
+  useEffect(() => {
+    const hariini = new Date().toISOString().split("T")[0];
+    setTglTransaksi(hariini);
+  }, []);
 
-      <form onSubmit={handleSubmit} className=" gap-4 mx-14 sm:p-5">
+  return (
+    <div className="overflow-auto">
+      <form onSubmit={handleSubmit} className=" gap-4 ">
         {/* Tanggal Transaksi */}
-        <div className="flex justify-between">
+        <div className="flex justify-between pt-5 pb-7 px-5">
           <div className="">
             <label className="block mb-1 font-bold text-gray-900">
               Tanggal Transaksi:
@@ -177,26 +173,10 @@ function TambahTransaksi() {
               type="date"
               value={tglTransaksi}
               onChange={(event) => setTglTransaksi(event.target.value)}
-              className="px-4 py-2  w-52 border rounded-lg text-gray-900"
+              className="px-4 py-2  w-60 border rounded-lg text-gray-900"
               required
             />
           </div>
-
-          {/* User */}
-          <div>
-            <label className="block mb-1 font-bold text-gray-900">User:</label>
-            <select
-              value={idUser}
-              onChange={(event) => setIdUser(event.target.value)}
-              className="px-4 py-2  w-52 border rounded-lg text-gray-900"
-              required
-            >
-              <option key={user.id_user} value={user.id_user}>
-                {user.nama_user}
-              </option>
-            </select>
-          </div>
-
           {/* Nomor Meja */}
           <div>
             <label className="block mb-1 font-bold text-gray-900">
@@ -205,7 +185,7 @@ function TambahTransaksi() {
             <select
               value={idMeja}
               onChange={(event) => setIdMeja(event.target.value)}
-              className="px-4 py-2  w-52 border rounded-lg text-gray-900"
+              className="px-4 py-2  w-60 border rounded-lg text-gray-900"
               required
             >
               <option value="">Pilih Meja</option>
@@ -226,7 +206,7 @@ function TambahTransaksi() {
               type="text"
               value={namaPelanggan}
               onChange={(event) => setNamaPelanggan(event.target.value)}
-              className="px-4 py-2  w-52 border rounded-lg text-gray-900"
+              className="px-4 py-2  w-60 border rounded-lg text-gray-900"
               required
             />
           </div>
@@ -240,7 +220,7 @@ function TambahTransaksi() {
               value={status}
               onChange={(event) => setStatus(event.target.value)}
               name="status"
-              className="px-4 py-2  w-52 border rounded-lg text-gray-900"
+              className="px-4 py-2  w-60 border rounded-lg text-gray-900"
               required
             >
               <option value="">Pilih Status</option>
@@ -248,27 +228,63 @@ function TambahTransaksi() {
               <option value="lunas">Lunas</option>
             </select>
           </div>
+          {/* User */}
+          <div>
+            <label className="block mb-1 font-bold text-gray-900">User:</label>
+            <input
+              type="text"
+              value={user.nama_user}
+              onChange={(event) => setIdUser(event.target.value)}
+              className="px-4 py-2  w-60  outline-none  rounded-lg text-gray-900"
+              required
+            />
+          </div>
         </div>
-        {/* Daftar Menu */}
-        {/* <div className="col-span-2 mt-5">
-          <table className="w-full text-md bg-[#331D2C] shadow-md rounded mb-4">
-            <thead>
-              <tr className="bg-[#e3acca]">
-                <th className="text-center p-3 px-5">Menu</th>
-                <th className="text-center p-3 px-5">Harga</th>
-                <th className="text-center p-3 px-5">Jumlah</th>
-                <th className="text-center p-3 px-5">Total</th>
-                <th className="text-center p-3 px-5">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {menu.map((menu) => (
-                <tr key={menu.id_menu} className=" text-white">
-                  <td className="text-center p-3 px-5">{menu.nama_menu}</td>
-                  <td className="text-center p-3 px-5">{menu.harga}</td>
-                  <td className="text-center p-3 px-5">
+        {/* Menu */}
+        <div className="flex flex-wrap gap-4 mt-6 justify-center">
+          {menu.map((menu) => (
+            <>
+              <div
+                key={menu.id_menu}
+                className="bg-white max-w-[220px] max-h-[800px] capitalize rounded-lg overflow-hidden w-full"
+              >
+                <img
+                  className="object-cover w-full h-44"
+                  src={imageURL + menu.gambar}
+                  alt={menu.gambar}
+                />
+                <div className="p-4">
+                  <p
+                    className={
+                      menu.jenis === "makanan"
+                        ? `bg-red-200 w-fit px-2 rounded-full font-semibold text-xs py-0.5`
+                        : "bg-blue-200 w-fit px-2 rounded-full font-semibold text-xs py-0.5"
+                    }
+                  >
+                    {menu.jenis}
+                  </p>
+                  <p className="font-semibold text-xl mt-2">{menu.nama_menu}</p>
+                  <p>Rp {new Intl.NumberFormat("id-ID").format(menu.harga)}</p>
+                  <p className="p-3 px-2 text-center">
+                    Rp{" "}
+                    {new Intl.NumberFormat("id-ID").format(
+                      menu.harga *
+                        (detailTransaksi.find(
+                          (item) => item.id_menu === menu.id_menu
+                        )?.jumlah || 0)
+                    )}
+                  </p>
+                  <div className="flex  h-12 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleAddToCart(menu.id_menu, -1)}
+                      className="border-red-500 border-2 text-red-500 hover:border-red-600  w-full flex justify-center items-center  rounded"
+                      required
+                    >
+                      <AiFillMinusCircle />
+                    </button>
                     <input
-                      type="number"
+                      type="text"
                       value={
                         detailTransaksi.find(
                           (item) => item.id_menu === menu.id_menu
@@ -279,108 +295,37 @@ function TambahTransaksi() {
                       onChange={(event) =>
                         handleQtyChange(menu.id_menu, event.target.value)
                       }
-                      className="w-24 text-center border rounded-md py-2 px-2 text-black"
+                      className="w-24 text-center border rounded-md  px-2 text-black"
                     />
-                  </td>
-                  <td className="p-3 px-2 text-center">
-                    {menu.harga *
-                      (detailTransaksi.find(
-                        (item) => item.id_menu === menu.id_menu
-                      )?.jumlah || 0)}
-                  </td>
-                  <td className="p-3 px-5 text-center" required>
                     <button
                       type="button"
                       onClick={() => handleAddToCart(menu.id_menu, 1)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
+                      className="border-blue-500 border-2 hover:border-blue-600 text-blue-500 w-full flex justify-center items-center rounded "
                       required
                     >
-                      Tambah
+                      <AiFillPlusCircle />
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => handleAddToCart(menu.id_menu, -1)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-                      required
-                    >
-                      Kurang
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div> */}
-
-        
-        <div className="flex justify-center gap-4 mt-6">
-          {menu.map((menu) => (
-            <>
-              <div key={menu.id_menu} className="bg-white w-fit capitalize rounded-lg">
-                <p className="font-medium"><b>{menu.nama_menu}</b></p>
-                <p>Rp{menu.harga}</p>
-                <img
-                  className="object-contain h-40 w-40"
-                  src={imageURL + menu.gambar}
-                  alt={menu.gambar}
-                />
-                <input
-                  type="number"
-                  value={
-                    detailTransaksi.find(
-                      (item) => item.id_menu === menu.id_menu
-                    )?.jumlah || 0
-                  }
-                  min="0"
-                  max="99"
-                  onChange={(event) =>
-                    handleQtyChange(menu.id_menu, event.target.value)
-                  }
-                  className="w-24 text-center border rounded-md py-2 px-2 text-black"
-                />
-                <td className="p-3 px-2 text-center">
-                  <b>Rp</b>{menu.harga *
-                    (detailTransaksi.find(
-                      (item) => item.id_menu === menu.id_menu
-                    )?.jumlah || 0)}
-                </td>
-                <button
-                  type="button"
-                  onClick={() => handleAddToCart(menu.id_menu, 1)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
-                  required
-                >
-                  <AiFillPlusCircle />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleAddToCart(menu.id_menu, -1)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-                  required
-                >
-                  <AiFillMinusCircle />
-                </button>
+                  </div>
+                </div>
               </div>
-              
             </>
           ))}
         </div>
-        <div className="mt-5">
+        <div className="mt-6">
           {/* Total Harga */}
-        <div>
-          <label className="block mb-1 text-xl font-bold text-gray-900">
-            Total Harga:
-          </label>
-          <span className="text-xl"> Rp{totalHarga}</span>
-        </div>
-
-        {/* Tombol Submit */}
-        <button
-          type="submit"
-          className="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded-md no-underline inline-block cursor-pointer"
-        >
-          Tambah Transaksi
-        </button>
+          <div>
+            <label className="block mb-1 text-xl font-bold text-gray-900">
+              TOTAL HARGA:
+            </label>
+            <span className="text-xl"> Rp {new Intl.NumberFormat("id-ID").format(totalHarga)}</span>
+          </div>
+          {/* Tombol Submit */}
+          <button
+            type="submit"
+            className="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded-md no-underline inline-block cursor-pointer mt-2"
+          >
+            Tambah Transaksi
+          </button>
         </div>
       </form>
     </div>
