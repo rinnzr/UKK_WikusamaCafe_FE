@@ -1,25 +1,39 @@
-import React from 'react';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import React from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
-const PrintButton = () => {
+const PrintButton = ({ nama }) => {
   const handlePrint = () => {
-    const input = document.getElementById('print-area');
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('Foodie Cafe.pdf');
+    const input = document.getElementById("print-area");
 
-      });
+    const inputWidth = input.offsetWidth;
+    const inputHeight = input.offsetHeight;
+
+    html2canvas(input, { width: inputWidth, height: inputHeight }).then(
+      (canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF({
+          unit: "px",
+          format: [inputWidth + 40, inputHeight + 80],
+        });
+
+        pdf.addImage(imgData, "PNG", 20, 40, inputWidth, inputHeight);
+
+        pdf.save(`struk_foodie_coffee_${nama}.pdf`);
+        pdf.autoPrint();
+        pdf.output("dataurlnewwindow");
+      }
+    );
   };
 
   return (
-      <button className='bg-neutral-500  text-white py-2 w-full' onClick={handlePrint}>Cetak PDF</button>
+    <button
+      className="bg-teal-500 my-4 rounded-lg text-white py-2 w-full"
+      onClick={handlePrint}
+    >
+      Print struk
+    </button>
   );
 };
 

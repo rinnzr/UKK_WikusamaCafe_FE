@@ -14,7 +14,7 @@ const StrukPrint = ({ transaksiItem }) => {
   return (
     <div className="struk-container pt-10 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
       <h2 className="text-center my-4 font-semibold text-base ">
-        <span className=" flex text-sm w-fit mx-auto mb-2">
+        <span className=" flex text-base text-amber-800 w-fit mx-auto mb-2 font-bold">
           {<IoFastFoodSharp />} <p>Foodie Cafe</p>{" "}
         </span>
         Struk Transaksi
@@ -42,20 +42,18 @@ const StrukPrint = ({ transaksiItem }) => {
             </ul>
            
             <ul>Rp{" "}
-                  {new Intl.NumberFormat("id-ID").format(
-                    transaksiItem.detail_transaksi.reduce(
-                      (total, detailItem) =>
-                        total + detailItem.menu.harga * detailItem.jumlah,
-                      0
-                    )
-                  )}</ul>
+            {new Intl.NumberFormat("id-ID").format(
+                 detailItem.menu.harga * detailItem.jumlah,
+              0
+            
+          )}</ul>
                   
           </li>
         ))}
       </ul>
-      <p>------------------------------------</p>
-      <p className="flex justify-between">
-        Subtotal:{" "}
+      <p className="mt-2">------------------------------------</p>
+      <p className="flex justify-between mt-3 font-bold text-lg">
+        Total:{" "}
         <span>
           Rp{new Intl.NumberFormat("id-ID").format(
             transaksiItem.detail_transaksi.reduce(
@@ -66,7 +64,7 @@ const StrukPrint = ({ transaksiItem }) => {
           )}
         </span>
       </p>
-      <p className="flex justify-between">
+      {/* <p className="flex justify-between">
         PPN 10%:{" "}
         <span>
           Rp{new Intl.NumberFormat("id-ID").format(
@@ -77,9 +75,9 @@ const StrukPrint = ({ transaksiItem }) => {
             )
           )}
         </span>
-      </p>
+      </p> */}
 
-      <p className="flex justify-between mt-3 font-bold text-lg">
+      {/* <p className="flex justify-between mt-3 font-bold text-lg">
         Total:{" "}
         <span>
           Rp
@@ -93,8 +91,8 @@ const StrukPrint = ({ transaksiItem }) => {
             )
           )}
         </span>
-      </p>
-      <p className="text-center mt-10 text-lg font-semibold">
+      </p> */}
+      <p className="text-center mt-14 text-lg font-semibold">
         Great Day Start With Coffe
       </p>
     </div>
@@ -340,7 +338,7 @@ const Transaksi = () => {
           {selectedTransaksi && (
             <div id="print-area" className="max-w-xl">
               <StrukPrint
-                transaksiItem={selectedTransaksi}
+                transaksiItem={selectedTransaksi} 
                 ref={componentRef}
               />
               <PrintButton />

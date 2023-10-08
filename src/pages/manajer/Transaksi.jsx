@@ -8,96 +8,6 @@ import { FiPrinter } from "react-icons/fi"
 import PrintButton from "../kasir/Transaksi/PrintButton";
 
 
-const StrukPrint = ({ transaksiItem }) => {
-  return (
-    <div className="struk-container pt-10 pb-20  w-80 mx-auto rounded-lg px-5 text-sm">
-      <h2 className="text-center my-4 font-semibold text-base ">
-        <span className=" flex text-sm w-fit mx-auto mb-2">
-          {<IoFastFoodSharp />} <p>Foodie Cafe</p>{" "}
-        </span>
-        Struk Transaksi
-      </h2>
-
-      {/* Tampilkan informasi transaksi */}
-      <p>
-        Date:{" "}
-        {new Intl.DateTimeFormat("id-ID").format(
-          new Date(transaksiItem.tgl_transaksi)
-        )}
-      </p>
-      <p>Customer: {transaksiItem.nama_pelanggan}</p>
-      <p>No Meja  : {transaksiItem.meja.nomor_meja}</p>
-      <p className="">Chasier: {transaksiItem.user.nama_user}</p>
-      <p>------------------------------------</p>
-      <ul className="justify-between">
-        {transaksiItem.detail_transaksi.map((detailItem) => (
-          <li
-            key={detailItem.id_detail_transaksi}
-            className="flex justify-between text-sm"
-          >
-            <ul>
-              {detailItem.menu.nama_menu} ({detailItem.jumlah})
-            </ul>
-           
-            <ul>Rp{" "}
-                  {new Intl.NumberFormat("id-ID").format(
-                    transaksiItem.detail_transaksi.reduce(
-                      (total, detailItem) =>
-                        total + detailItem.menu.harga * detailItem.jumlah,
-                      0
-                    )
-                  )}</ul>
-                  
-          </li>
-        ))}
-      </ul>
-      <p>------------------------------------</p>
-      <p className="flex justify-between">
-        Subtotal:{" "}
-        <span>
-          Rp{new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                total + detailItem.menu.harga * detailItem.jumlah,
-              0
-            )
-          )}
-        </span>
-      </p>
-      <p className="flex justify-between">
-        PPN 10%:{" "}
-        <span>
-          Rp{new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                total + detailItem.menu.harga * detailItem.jumlah * 0.1,
-              0
-            )
-          )}
-        </span>
-      </p>
-
-      <p className="flex justify-between mt-3 font-bold text-lg">
-        Total:{" "}
-        <span>
-          Rp
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                total +
-                detailItem.menu.harga * detailItem.jumlah * 0.1 +
-                detailItem.menu.harga * detailItem.jumlah,
-              0
-            )
-          )}
-        </span>
-      </p>
-      <p className="text-center mt-10 text-lg font-semibold">
-        Great Day Start With Coffe
-      </p>
-    </div>
-  );
-};
 
 // DAFTAR TRANSAKSI
 const TransaksiManajer = () => {
@@ -157,7 +67,7 @@ const TransaksiManajer = () => {
       <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
         Daftar Transaksi
       </h1>
-      <div className="shadow overflow-y-scroll h-[80vh] border-b border-gray-200 sm:rounded-lg">
+      <div className="shadow overflow-y-scroll h-[90vh] border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -208,12 +118,6 @@ const TransaksiManajer = () => {
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Status
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Print Struk
               </th>
             </tr>
           </thead>
@@ -271,40 +175,13 @@ const TransaksiManajer = () => {
                     </button>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
-                    onClick={() => handlePrint(transaksiItem)}
-                  >
-                   <FiPrinter/>
-                  </button>
-                </td>
+                
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* Modal Print */}
-     {/* Modal Print */}
-     <Modal
-        isOpen={showPrintModal}
-        overlayRef={false}
-        onRequestClose={() => setShowPrintModal(false)}
-        className="w-fit items-center h-full flex flex-col justify-center  border-neutral-600 mx-auto"
-      >
-        <div className="mx-auto w-fit bg-white">
-          {selectedTransaksi && (
-            <div id="print-area" className="max-w-xl">
-              <StrukPrint
-                transaksiItem={selectedTransaksi}
-                ref={componentRef}
-              />
-              <PrintButton />
-            </div>
-          )}
-        </div>
-      </Modal>
     </div>
     </div>
   );

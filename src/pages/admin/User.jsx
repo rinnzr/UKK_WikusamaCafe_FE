@@ -2,15 +2,12 @@ import Modal from "react-modal";
 import axios from "axios"; //to mannage API
 import { useState, useEffect } from "react";
 import { config, baseURL, imageURL } from "../../config";
+import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
 
-//functional component (Hooks)
 function User() {
-  //create state member to collect data member from API
   let [users, setUser] = useState([]);
   let [ModalIsOpen, setModalIsOpen] = useState(false);
-  // const url = "http://localhost:8000/menu/"
 
-  //create state newMenu to collect new data member
   let [newUser, setnewUser] = useState([
     {
       id_user: "",
@@ -25,13 +22,11 @@ function User() {
   let [change, setChange] = useState(false); // mannage gambar to show
   let [action, setAction] = useState(""); // mannage action to save
 
-  //manages the side-effects in functional component
   useEffect(() => {
     fetchUser();
   }, []);
 
   const fetchUser = async () => {
-    // get data from API using AXIOS
     try {
       const response = await axios.get(baseURL + "/user", config);
       setUser(response.data.data);
@@ -56,7 +51,6 @@ function User() {
 
   const handleAdd = () => {
     setAction("add"); // save new member
-    //empty form
     setnewUser({
       id_user: "",
       nama_user: "",
@@ -68,34 +62,30 @@ function User() {
 
   const handleEdit = (item) => {
     setAction("edit"); // update old member
-
-    //fill form with previous data based on clicked item
     setnewUser({
       id_user: item.id_user,
       nama_user: item.nama_user,
       role: item.role,
       username: item.username,
-      password: item.password,
+      password: "",
     });
   };
 
   const handleDelete = async (id_user) => {
     alert("Are you sure delete this data?");
 
-    // delete data from API using AXIOS
     try {
       const response = await axios.delete(baseURL + "/user/" + id_user, config);
       alert(response.data.message);
     } catch (error) {
       console.error(error);
     }
-    // refresh member data
     fetchUser();
   };
 
   const handleSave = async (e) => {
-    e.preventDefault(); // prevent refresh page after sending form data
-    setChange(false); // clear previous update photo status
+    e.preventDefault(); 
+    setChange(false); 
     
     //prepare data to save
     let paramBody = {
@@ -138,23 +128,29 @@ function User() {
     <div className=" flex w-full pr-4 ">
       <div className="w-full h-screen">
         {/* title */}
-        <h1 className="flex justify-center font-medium text-3xl">User</h1>
 
-        <div className="flex justify-content-between align-items-center">
+        <div className="flex justify-between w-full items-center ">
           {/* search form*/}
           <form
-            className="w-full flex justify-end text-gray-100"
+            className="w-full  text-gray-100"
             onSubmit={(e) => handleSearch(e)}
           >
             <input
               type="search"
               name="Search"
               placeholder="Search..."
-              className="w-56 py-2 pl-4 text-sm outline-none bg-white text-gray-700   rounded-2xl border-2 border-gray-400"
+              className="w-96 h-12 py-2 pl-4 text-sm outline-none bg-white text-gray-700   rounded border border-gray-400"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </form>
+           {/* button add */}
+        <button onClick={() => setModalIsOpen(true)} className="bg-green-600 hover:bg-green-700 text-white w-fit font-bold py-2 px-3 rounded-md no-underline ">
+          <a
+            onClick={() => handleAdd()}>
+            Tambah User
+          </a>
+        </button>
         </div>
 
         {/* table */}
@@ -165,10 +161,10 @@ function User() {
               <th className="py-3">Nama</th>
               <th className="py-3">Jabatan</th>
               <th className="py-3">Username</th>
-              <th className="py-3 pl-14">Action</th>
+              <th className="py-3 ">Action</th>
             </tr>
           </thead>
-          <tbody className="border-b border-opacity-20 py-4 min-h-[90px] max-h-[100px] border-gray-700 bg-yellow-100 text-base">
+          <tbody className="border-b border-opacity-20 py-4 min-h-[90px] text-center max-h-[100px] border-gray-700 bg-yellow-100 text-base">
             {users.map((item, index) => (
               <tr key={item.id_user} className="hover:bg-yellow-50">
                 <th className="p-3">{index + 1}</th>
@@ -176,14 +172,14 @@ function User() {
                 <td>{item.role}</td>
                 <td>{item.username}</td>
                 <td className=" h-full justify-center">
-                  <div className="flex items-center max-w-[80px] gap-2 ">
+                  <div className="flex items-center justify-center gap-2 ">
                     {/* button edit */}
                     <button onClick={() => setModalIsOpen(true)}>
                       <a
                         className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md no-underline inline-block cursor-pointer"
                         onClick={() => handleEdit(item)}
                       >
-                        edit
+                          <AiOutlineEdit />
                       </a>
                     </button>
                     {/* button delete */}
@@ -191,7 +187,7 @@ function User() {
                       className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4  rounded-md  no-underline inline-block cursor-pointer"
                       onClick={() => handleDelete(item.id_user)}
                     >
-                      delete
+                     <AiFillDelete />
                     </a>
                   </div>
                 </td>
@@ -199,14 +195,7 @@ function User() {
             ))}
           </tbody>
         </table>
-        {/* button add */}
-        <button onClick={() => setModalIsOpen(true)}>
-          <a
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded-md mt-3 no-underline inline-block"
-            onClick={() => handleAdd()}>
-            Tambah
-          </a>
-        </button>
+       
       </div>
 
       {/* create modal form to add or edit member data */}
@@ -216,7 +205,7 @@ function User() {
         onRequestClose={() => setModalIsOpen(false)}
       >
         <h2 className="text-2xl font-semibold leading-tight tracking-wide">
-          Edit Menu
+          Edit User
         </h2>
         <div>
           <button onClick={() => setModalIsOpen(false)}>
@@ -278,7 +267,6 @@ function User() {
               required
             />
             </div>
-
            <div>
            <label className="text-sm text-gray-800">password</label>
            <input
@@ -291,18 +279,11 @@ function User() {
               required
             />
            </div>
-
             <button className="btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md no-underline inline-block cursor-pointer" type="submit">
               Save
             </button>
           </form>
         </div>
-        {/* <button
-          type="button"
-          classN1w-full"px-8 py-2 font-semibold rounded-full bg-violet-400 text-gray-900"
-        >
-          Start recycling
-        </button> */}
       </Modal>
     </div>
   );

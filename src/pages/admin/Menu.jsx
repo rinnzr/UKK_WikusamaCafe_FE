@@ -1,7 +1,8 @@
 import Modal from "react-modal";
 import axios from "axios"; //to mannage API
 import { useState, useEffect } from "react";
-// import { MySidebar } from '../components/mySidebar'
+import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
+
 import { config, baseURL, imageURL } from "../../config";
 
 //functional component (Hooks)
@@ -154,25 +155,24 @@ function Menu() {
     <div className=" max-w-full lg:px-8 h-screen overflow-hidden ">
       <div className="w-full h-screen">
         {/* title */}
-        <h1 className="flex justify-center font-medium text-3xl mt-2">Menu</h1>
         <div className="flex justify-content-between align-items-center">
           {/* search form*/}
           <form
-            className="w-full flex justify-end text-gray-100"
+            className="w-full flex justify-start text-gray-100"
             onSubmit={(e) => handleSearch(e)}
           >
             <input
               type="search"
               name="Search"
               placeholder="Search..."
-              className="w-56 py-2 pl-4 text-sm outline-none bg-white text-gray-700 rounded-2xl border-2 border-gray-400"
+              className="w-96 h-12 py-2 pl-4 my-4 text-sm outline-none bg-white text-gray-700  rounded border border-gray-400"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </form>
         </div>
         {/* table */}
-        <div className="shadow sm:rounded-lg overflow-y-scroll h-[90vh]">
+        <div className="shadow sm:rounded-lg overflow-y-scroll h-[70vh]">
           <table className="min-w-full">
             <thead className="bg-orange-800 w-full text-lg text-gray-50">
               <tr>
@@ -205,15 +205,17 @@ function Menu() {
                       alt={item.gambar}
                     />
                   </td>
-                  <td className="py-3 px-4">
-                    <div className="flex justify-center items-center gap-2">
+                  <td className="py-3 ">
+                    <div className="flex gap-2 justify-center items-center">
                       {/* button edit */}
-                      <button onClick={() => setModalIsOpen(true)}>
+                      <button onClick={() => setModalIsOpen(true)}
+                     className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md cursor-pointer" 
+                      >
                         <a
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md cursor-pointer"
+                          
                           onClick={() => handleEdit(item)}
                         >
-                          Edit
+                              <AiOutlineEdit />
                         </a>
                       </button>
                       {/* button delete */}
@@ -221,7 +223,8 @@ function Menu() {
                         className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md cursor-pointer"
                         onClick={() => handleDelete(item.id_menu)}
                       >
-                        Delete
+                                                <AiFillDelete />
+
                       </button>
                     </div>
                   </td>
@@ -356,12 +359,6 @@ function Menu() {
               </button>
             </form>
           </div>
-          {/* <button
-          type="button"
-          classN1w-full"px-8 py-2 font-semibold rounded-full bg-violet-400 text-gray-900"
-        >
-          Start recycling
-        </button> */}
         </div>
       </Modal>
     </div>

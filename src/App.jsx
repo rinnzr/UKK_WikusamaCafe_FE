@@ -9,8 +9,8 @@ import Transaksi from "./pages/kasir/Transaksi/Transaksi";
 import TambahTransaksi from "./pages/kasir/TambahTransaksi";
 import DashboardManajer from "./pages/manajer/DashboardManajer";
 import TransaksiManajer from "./pages/manajer/Transaksi";
-import Laporan from "./pages/manajer/Laporan";
-import LaporanTgl from "./pages/manajer/LaporanTgl";
+import LaporanTgl from "./pages/manajer/Laporan";
+import LaporanKasir from "./pages/manajer/LaporanKasir";
 import "./App.css";
 import Layout from "./Components/layout";
 
@@ -47,8 +47,8 @@ function App() {
             <Routes path="/DashboardManajer" element={<DashboardManajer />}>
               <Route path="DashboardManajer" element={<DashboardManajer />} />
               <Route path="TransaksiManajer" element={<TransaksiManajer />} />
-              <Route path="Laporan" element={<Laporan />} />
-              <Route path="LaporanTgl" element={<LaporanTgl />} />
+              <Route path="Laporan" element={<LaporanTgl />} />
+              <Route path="LaporanKasir" element={<LaporanKasir />} />
             </Routes>
           </Layout>
         </div>

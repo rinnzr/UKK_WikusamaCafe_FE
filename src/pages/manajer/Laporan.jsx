@@ -42,7 +42,7 @@ function LaporanTgl() {
   const fetcTotal = async () => {
     try {
       const response = await axios.get(
-         baseURL+`/transaksi/pendapatantgl/${tglTransaksi}`,
+        baseURL + `/transaksi/pendapatantgl/${tglTransaksi}`,
         config
       );
       setTotal(response.data.total_keseluruhan);
@@ -50,16 +50,14 @@ function LaporanTgl() {
       console.error(error);
     }
   };
-  useEffect(() =>{
+  useEffect(() => {
     fetcTotal();
-  },[]);// Jangan lupa tambahkan dependensi kosong agar efek ini hanya dijalankan sekali
+  }, []); // Jangan lupa tambahkan dependensi kosong agar efek ini hanya dijalankan sekali
 
   const handleTotal = () => {
-    fetcTotal(); 
-  }
-  console.log(total)
-
-
+    fetcTotal();
+  };
+  console.log(total);
 
   const calculateTotal = (transaksiData) => {
     let total = 0;
@@ -75,66 +73,74 @@ function LaporanTgl() {
   };
 
   const totalPendapatan = calculateTotal(transaksiData);
-  console.log(totalPendapatan)
+  console.log(totalPendapatan);
 
   return (
-    <div className="max-w-full p-4 h-screen overflow-y-scroll">
+    <div className="max-w-full px-4  h-screen overflow-y-scroll">
       <h1 className="text-2xl font-semibold mb-4">Data Transaksi</h1>
-      <div className="mb-4">
-        <label className="mr-4">
+
+      <div className="flex gap-4 items-center mb-4">
+        <div className="mb-4">
+          <label className="mr-4">
+            <input
+              type="radio"
+              value="tanggal"
+              checked={mode === "tanggal"}
+              onChange={() => setMode("tanggal")}
+              className="mr-2 h-6 w-6"
+            />
+            Tanggal
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="bulan"
+              checked={mode === "bulan"}
+              onChange={() => setMode("bulan")}
+              className="mr-2 h-6 w-6"
+            />
+            Bulan
+          </label>
+        </div>
+        {mode === "tanggal" ? (
           <input
-            type="radio"
-            value="tanggal"
-            checked={mode === "tanggal"}
-            onChange={() => setMode("tanggal")}
-            className="mr-2"
+            type="date"
+            placeholder="YYYY-MM-DD"
+            onChange={(e) => setTglTransaksi(e.target.value)}
+            value={tglTransaksi}
+            className="w-48 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
           />
-          Tanggal
-        </label>
-        <label>
+        ) : (
           <input
-            type="radio"
-            value="bulan"
-            checked={mode === "bulan"}
-            onChange={() => setMode("bulan")}
-            className="mr-2"
+            type="month"
+            placeholder="YYYY-MM"
+            onChange={(e) => setBulanTahun(e.target.value)}
+            value={bulanTahun}
+            className="w-48 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
           />
-          Bulan
-        </label>
-      </div>
-      {mode === "tanggal" ? (
-        <input
-          type="date"
-          placeholder="YYYY-MM-DD"
-          onChange={(e) => setTglTransaksi(e.target.value)}
-          value={tglTransaksi}
-          className="w-48 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
-        />
-      ) : (
-        <input
-          type="month"
-          placeholder="YYYY-MM"
-          onChange={(e) => setBulanTahun(e.target.value)}
-          value={bulanTahun}
-          className="w-48 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
-        />
-      )}
-      <button
-        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ml-2"
-        onClick={() => {
-          handleButtonClick();
-          handleTotal();
-        }}
-      >
-        Cari Transaksi
-      </button>
-      {dataKosong && (
-        <p>
-          <button className="text-gray-50 bg-red-500 px-4 py-2 mt-3 font-semibold rounded-lg  ">
+        )}
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ml-2"
+          onClick={() => {
+            handleButtonClick();
+            handleTotal();
+          }}
+        >
+          Cari Transaksi
+        </button>
+        {dataKosong && (
+          <p className="w-full h-[70vh] items-center flex justify-center ">
             Data tidak ditemukan
-          </button>
+          </p>
+        )}
+        <p className="text-lg  whitespace-nowrap ">
+          Pendapatan &nbsp; :
+          <span className="bg-red-500 rounded-md py-2 pl-2 pr-12 ml-2 text-gray-50 font-semibold">
+            {" "}
+            Rp {new Intl.NumberFormat("id-ID").format(totalPendapatan)}
+          </span>
         </p>
-      )}
+      </div>
 
       {transaksiData.length > 0 ? (
         <>
@@ -247,14 +253,6 @@ function LaporanTgl() {
                 ))}
               </tbody>
             </table>
-            <p className="text-lg py-4 whitespace-nowrap ">
-        Pendapatan&nbsp;
-          <span>
-            {tglTransaksi}
-          </span>
-          &nbsp; :
-          <span className="bg-red-500 rounded-md px-3 ml-2 text-gray-50 font-semibold"> Rp {new Intl.NumberFormat("id-ID").format(totalPendapatan)}</span>
-      </p>
           </div>
         </>
       ) : (

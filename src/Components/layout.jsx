@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "./Navbar/NavbarAdmin";
 import NavbarKasir from "./Navbar/NavbarKasir";
 import NavbarManajer from "./Navbar/NavbarManajer";
@@ -10,7 +11,13 @@ export default function Layout({ children }) {
 
   // Check if userRole is not null before calling toUpperCase()
   const roleUpperCase = userRole?.toUpperCase() || "";
-
+  const navigate = useNavigate(); //fungsi usenavigate yang di definisikan menjadi variabel navigate
+  React.useEffect(() => {
+    if (!localStorage.getItem("logged")) {
+      navigate("/");
+    }
+  }, []);
+  
   return (
     <>
       <section className="flex w-full h-full max-h-screen">

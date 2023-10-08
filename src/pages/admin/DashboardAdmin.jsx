@@ -1,21 +1,19 @@
 import { useState, useEffect } from "react"; // usestate untuk menyimpan nilai, useeffect: menjelaskan function sebelum render/return
 import axios from "axios";
-// import { FiBookOpen,FiUser } from "react-icons/fi";
-// import{FaHands} from "react-icons/fa";
-import Layout from "../../Components/layout";
+import {AiOutlineEdit} from "react-icons/ai"
 import { baseURL, config } from "../../config";
+import { Link } from "react-router-dom";
+
 
 function DashboardAdmin() {
   const [mejas, setMejas] = useState("");
   const [menus, setMenus] = useState("");
   const [user, setUser] = useState("");
-  let [users, setUsers] = useState([]);
 
   useEffect(() => {
     //sesuai dengan functionnya
     getMejas();
     getMenus();
-    getUsers();
     getUser();
   }, []);
 
@@ -24,7 +22,6 @@ function DashboardAdmin() {
       .get(baseURL + "/meja", config)
       .then((response) => {
         setMejas(response.data.data.length);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -36,30 +33,16 @@ function DashboardAdmin() {
       .get(baseURL + "/menu", config)
       .then((response) => {
         setMenus(response.data.data.length);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const getUsers = () => {
-    axios
-      .get(baseURL + "/user", config)
-      .then((response) => {
-        setUsers(response.data.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  };;
   const getUser = () => {
     axios
       .get(baseURL + "/user", config)
       .then((response) => {
         setUser(response.data.data.length);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -69,30 +52,39 @@ function DashboardAdmin() {
   return (
     <>
       <section className="p-6  text-gray-700 items-center">
-        <div className="mx-auto">
-          <h2 className="text-5xl font-bold text-center text-gray-900">
-            Selamat Datang Admin!!!!!
-          </h2>
-          <div className="grid gap-6 my-16 lg:grid-cols-3 border-spacing-4 border-rose-700">
-            <div className="flex flex-col p-8 space-y-4 rounded-md bg-rose-50 ">
-              <p className="text-2xl font-semibold">
+          <div className=" flex flex-col gap-4  my-16  border-spacing-4 border-rose-700">
+            <div className="my-4">
+            <h1 className="text-2xl font-medium pb-2">Menu</h1>
+            <div className="flex justify-between items-center  h-24 rounded-md bg-white ">
+              <p className="text-2xl font-semibold flex gap-4 h-full items-center px-4 border-r-2 border-yellow-900">
+                <p>Jumlah</p>
                 <b>{menus}</b>
-                <p>Menu</p>
               </p>
+              <Link className="flex items-center gap-4 bg-yellow-950 px-4 rounded hover:translate-x-2 mr-6 h-16 duration-150 ease-out  text-white font-semibold " to="/menu">edit <AiOutlineEdit/></Link>
             </div>
-            <div className="flex flex-col p-8 space-y-4 rounded-md bg-rose-50 ">
-              <p className="text-2xl font-semibold">
+            </div>
+            <div className="my-4">
+            <h1 className="text-2xl font-medium pb-2">User</h1>
+            <div className="flex justify-between items-center  h-24 rounded-md bg-white ">
+              <p className="text-2xl font-semibold flex gap-4 h-full items-center px-4 border-r-2 border-yellow-900">
+                <p>Jumlah</p>
                 <b>{user}</b>
-                <p>User</p>
               </p>
+              <Link className="flex items-center gap-4 bg-yellow-950 px-4 rounded hover:translate-x-2 mr-6 h-16 duration-150 ease-out  text-white font-semibold " to="/User">edit <AiOutlineEdit/></Link>
             </div>
-            <div className="flex flex-col p-8 space-y-4 rounded-md bg-rose-50 ">
-              <p className="text-2xl font-semibold">
+            </div>
+            <div className="my-4">
+            <h1 className="text-2xl font-medium pb-2">Meja</h1>
+            <div className="flex justify-between items-center  h-24 rounded-md bg-white ">
+              <p className="text-2xl font-semibold flex gap-4 h-full items-center px-4 border-r-2 border-yellow-900">
+                <p>Jumlah</p>
                 <b>{mejas}</b>
-                <p>Meja</p>
               </p>
+              <Link className="flex items-center gap-4 bg-yellow-950 px-4 rounded hover:translate-x-2 mr-6 h-16 duration-150 ease-out  text-white font-semibold " to="/Meja">edit <AiOutlineEdit/></Link>
             </div>
-          </div>
+            </div>
+           
+          
         </div>
       </section>
     </>
