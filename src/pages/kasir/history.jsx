@@ -99,15 +99,15 @@ const HistoryTransaction = () => {
           <thead className="bg-teal-500 text-[10px] tracking-wider uppercase font-medium sticky top-0 text-white  text-center w-full">
             <tr>
               <th className="py-3 px-2 text-center max-w-fit ">No</th>
-              <th className="py-3 max-w-[4.4rem]">Nama Pelanggan</th>
-              <th className=" py-3 text-center max-w-fit">Chasier</th>
-              <th className="px-2 py-3 max-w-fit ">Waktu Transaksi</th>
-              <th className="py-3 text-center max-w-[50px] ">No Meja</th>
-              <th className="py-3">Menu & jumlah</th>
-              <th className="py-3 px-2">Harga Satuan</th>
-              <th className="px-6 py-3">Total</th>
+              <th className=" max-w-[4.4rem]">Nama Pelanggan</th>
+              <th className="  text-center max-w-fit">Chasier</th>
+              <th className="px-2  max-w-fit ">Waktu Transaksi</th>
+              <th className=" text-center max-w-[50px] ">No Meja</th>
+              <th className="">Menu & jumlah</th>
+              <th className=" px-2">Harga Satuan</th>
+              <th className="px-6 ">Total</th>
               <th>Status Bayar</th>
-              <th className="w-2 py-3 px-2    ">Struk</th>
+              <th className="w-2  px-2    ">Struk</th>
             </tr>
           </thead>
           <tbody>

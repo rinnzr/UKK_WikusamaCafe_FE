@@ -3,10 +3,10 @@ import { AiOutlineInbox } from "react-icons/ai";
 
 const NoData = () => {
   return (
-    <div className="h-[80vh] flex justify-center text-neutral-400 flex-col items-center w-full">
+    <p className="h-[80vh] text-xl flex justify-center text-neutral-400 flex-col items-center w-full">
       Data Not Found
-      <AiOutlineInbox size={100} />
-    </div>
+      <AiOutlineInbox size={100} fontWeight={200} />
+    </p>
   );
 };
 
