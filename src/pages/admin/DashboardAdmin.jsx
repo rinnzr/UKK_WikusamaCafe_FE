@@ -6,13 +6,10 @@ function DashboardAdmin() {
   const [mejas, setMejas] = useState("");
   const [menus, setMenus] = useState("");
   const [user, setUser] = useState("");
-  let [users, setUsers] = useState([]);
 
   useEffect(() => {
-    //sesuai dengan functionnya
     getMejas();
     getMenus();
-    getUsers();
     getUser();
   }, []);
 
@@ -21,7 +18,6 @@ function DashboardAdmin() {
       .get(baseURL + "/meja", config)
       .then((response) => {
         setMejas(response.data.data.length);
-        // console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -39,16 +35,7 @@ function DashboardAdmin() {
       });
   };
 
-  const getUsers = () => {
-    axios
-      .get(baseURL + "/user", config)
-      .then((response) => {
-        setUsers(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+ 
   const getUser = () => {
     axios
       .get(baseURL + "/user", config)

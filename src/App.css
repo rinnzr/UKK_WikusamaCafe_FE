@@ -3,3 +3,10 @@
 * {
   font-family: 'poppins';
 }
+
+.text-primary{
+  color: "#19D3C8";
+}
+.border-primary{
+  border-color: "#19D3C8";
+}

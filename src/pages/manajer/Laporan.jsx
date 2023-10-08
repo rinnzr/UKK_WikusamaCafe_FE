@@ -62,6 +62,7 @@ function Laporan() {
   };
 
   const bulans = DataBulan.find((item) => item.id === bulan);
+
   return (
     <div className="max-w-full p-4 h-screen overflow-y-scroll">
       <div className="flex justify-between w-full italic">

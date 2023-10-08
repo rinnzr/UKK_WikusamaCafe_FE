@@ -1,63 +1,27 @@
 import * as React from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import {
-  BiCollection,
-  BiFoodMenu,
-  BiTable,
-  BiUser,
-  BiLogOut,
-} from "react-icons/bi";
+import { BiUser, BiLogOut } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { menuData } from "./data";
 
-const NavAdmin = [
-  {
-    id: "1",
-    icons: <BiCollection />,
-    nama: "Dasboard",
-    link: "/dashBoard-admin",
-  },
-  {
-    id: "2",
-    icons: <BiFoodMenu />,
-    nama: "Menu",
-    link: "/menu",
-  },
-  {
-    id: "3",
-    icons: <BiTable />,
-    nama: "Meja",
-    link: "/meja",
-  },
-  {
-    id: "4",
-    icons: <BiUser />,
-    nama: "user",
-    link: "/user",
-  },
-];
-
-function NavbarAdmin() {
-  const navigate = useNavigate(); //fungsi usenavigate yang di definisikan menjadi variabel navigate
-  const [open, setOpen] = React.useState(true); // membuat state dengan nilai default false
-
+function Sidebar() {
+  const navigate = useNavigate();
   const getButtonClasses = (pathname) => {
-    const commonClasses = `px-2 py-4 font-medium ease-out transition-colors hover:bg-opacity-50 hover:bg-orange-200 hover:pl-4 pl-2 hover:text-orange-500 duration-100 text-sm flex items-center ${
+    const commonClasses = `px-2 py-4 text-neutral-700 font-medium ease-out transition-colors hover:bg-opacity-50 hover:bg-teal-200 hover:pl-4 pl-2 hover:text-teal-500 duration-100 text-sm flex items-center ${
       !open && "justify-center text-lg"
     }`;
-    const selectedClasses = `border-l-4 bg-neutral-100 border-orange-500   `;
+    const selectedClasses = `border-l-4 text-teal-500 bg-teal-50 border-teal-500   `;
     return pathname === window.location.pathname
       ? `${commonClasses} ${selectedClasses}`
       : commonClasses;
   };
   const role = localStorage.getItem("user");
   const name = localStorage.getItem("namauser");
-
-  //sesuaikan warna dengan yang anda inginkan
-  const text = "neutral-700";
-  const hover = "orange-100";
-  const orange = "orange-500";
-  const backgound = "neutral-200";
-
+  if (!menuData[role]) {
+    console.error(`Role "${role}" tidak valid!`);
+  }
+  const Menus = menuData[role] || [];
   return (
     <aside
       className={` ${
@@ -81,26 +45,26 @@ function NavbarAdmin() {
         alt=""
         className={`mx-auto py-4 ${open ? "w-20" : "w-8"}`}
       />
-      <div className={`border-b border-orange-500  mb-4`}></div>
+      <div className={`border-b border-teal-500  mb-4`}></div>
       <div
         className={`${
           !open && "text-center"
         } flex-grow flex flex-col capitalize1`}
       >
-        {NavAdmin.map((nav) => (
-          <a
+        {Menus.map((nav) => (
+          <Link
             key={nav.id}
-            href={nav.link}
+            to={nav.link}
             className={getButtonClasses(`${nav.link}`)}
           >
             {nav.icons}
             <span className="pl-2">{open && nav.nama} </span>
-          </a>
+          </Link>
         ))}
       </div>
-      <div className={`border-b border-orange-500  `}></div>
+      <div className={`border-b border-teal-500  `}></div>
       <div
-        className={`flex justify-between items-center hover:bg-orange-200 p-2 rounded-md mb-10 ${
+        className={`flex justify-between mt-2 items-center hover:bg-neutral-100 p-2 rounded-md mb-10 ${
           !open && "flex-col gap-2"
         }`}
       >
@@ -112,8 +76,8 @@ function NavbarAdmin() {
           <BiUser className={`text-2xl w-8 h-8 bg-neutral-200 rounded p-2`} />
           {open && (
             <div>
-              <p className="font-semibold text-base -mb-1">{name}</p>
-              <p className="font-medium text-xs text-neutral-400">{role}</p>
+              <p className="font-semibold text-sm -mb-2">{name}</p>
+              <i className="font-normal text-xs text-neutral-400">{role}</i>
             </div>
           )}
         </div>
@@ -131,4 +95,4 @@ function NavbarAdmin() {
   );
 }
 
-export default NavbarAdmin;
+export default Sidebar;

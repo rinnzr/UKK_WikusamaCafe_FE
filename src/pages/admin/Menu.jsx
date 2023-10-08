@@ -1,18 +1,18 @@
 import Modal from "react-modal";
-import axios from "axios"; //to mannage API
-import { useState, useEffect } from "react";
-// import { MySidebar } from '../components/mySidebar'
+import * as React from "react";
+import axios from "axios";
 import { config, baseURL, imageURL } from "../../config";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import NoData from "../../Components/NoData";
 
-//functional component (Hooks)
-function Menu() {
-  //create state member to collect data member from API
-  let [menus, setMenus] = useState([]);
-  let [ModalIsOpen, setModalIsOpen] = useState(false);
-  // const url = "http://localhost:8000/menu/"
-
-  //create state newMenu to collect new data member
-  let [newMenu, setnewMenu] = useState([
+const Menu = () => {
+  const [menus, setMenus] = React.useState([]);
+  const [ModalIsOpen, setModalIsOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
+  const [change, setChange] = React.useState(false);
+  const [action, setAction] = React.useState("");
+  const [newMenu, setnewMenu] = React.useState([
     {
       id_menu: "",
       nama_menu: "",
@@ -23,17 +23,11 @@ function Menu() {
     },
   ]);
 
-  let [search, setSearch] = useState(""); // collect search data
-  let [change, setChange] = useState(false); // mannage gambar to show
-  let [action, setAction] = useState(""); // mannage action to save
-
-  //manages the side-effects in functional component
-  useEffect(() => {
+  React.useEffect(() => {
     fetchMenu();
   }, []);
 
   const fetchMenu = async () => {
-    // get data from API using AXIOS
     try {
       const response = await axios.get(baseURL + "/menu", config);
       setMenus(response.data.data);
@@ -71,9 +65,6 @@ function Menu() {
 
   const handleEdit = (item) => {
     setAction("edit"); // update old member
-
-    console.log("item >>> ", item);
-    //fill form with previous data based on clicked item
     setnewMenu({
       id_menu: item.id_menu,
       nama_menu: item.nama_menu,
@@ -87,25 +78,21 @@ function Menu() {
   const handleDelete = async (id_menu) => {
     alert("Are you sure delete this data?");
 
-    // delete data from API using AXIOS
     try {
       const response = await axios.delete(baseURL + "/menu/" + id_menu, config);
       alert(response.data.message);
     } catch (error) {
       console.error(error);
     }
-    // refresh member data
     fetchMenu();
   };
 
   const handleSave = async (e) => {
-    e.preventDefault(); // prevent refresh page after sending form data
-    // modal.hide() // close modal
+    e.preventDefault();
 
-    setChange(false); // clear previous update photo status
+    setChange(false);
 
-    //prepare data to save
-    let data = new FormData();
+    const data = new FormData();
     data.append("nama_menu", newMenu.nama_menu);
     data.append("jenis", newMenu.jenis);
     data.append("harga", newMenu.harga);
@@ -113,7 +100,6 @@ function Menu() {
     data.append("gambar", newMenu.gambar);
 
     if (action === "add") {
-      // save new data to API using AXIOS
       try {
         const response = await axios.post(baseURL + "/menu", data, config);
         alert(response.data.message);
@@ -123,7 +109,6 @@ function Menu() {
       }
     }
     if (action === "edit") {
-      // update data to API using AXIOS
       try {
         const response = await axios.put(
           baseURL + "/menu/" + newMenu.id_menu,
@@ -136,98 +121,158 @@ function Menu() {
         console.error(error);
       }
     }
-    // refresh member data
     fetchMenu();
   };
 
   return (
-    <div className="flex w-full  h-screen overflow-y-scroll ">
-      <div className="w-full mx-10">
-        <h1 className="font-medium  text-5xl text-center">Menu List</h1>
-        <form
-          className=" text-gray-100 w-full  text-end"
-          onSubmit={(e) => handleSearch(e)}
-        >
-          <input
-            type="search"
-            name="Search"
-            placeholder="Search..."
-            className="w-56 py-2 pl-4 text-sm outline-none bg-white text-gray-700  rounded-lg border border-gray-400"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </form>
-
-        {/* table */}
-        <table className="w-full mt-4border-collapse">
-          <thead className="bg-[#F97B22] w-screen text-lg text-white">
-            <tr>
-              <th className="py-3 px-4">No</th>
-              <th className="py-3 px-4">Nama Menu</th>
-              <th className="py-3 px-4">Jenis</th>
-              <th className="py-3 px-4">Harga</th>
-              <th className="py-3 px-4">Deskripsi</th>
-              <th className="py-3 px-4">Gambar</th>
-              <th className="py-3 px-4">Action</th>
-            </tr>
-          </thead>
-
-          <tbody className="divide-y divide-gray-700 text-base">
-            {menus.map((item, index) => (
-              <tr key={item.id_menu} className="">
-                <td className="py-3 px-4">{index + 1}</td>
-                <td className="py-3 px-4">{item.nama_menu}</td>
-                <td className="py-3 px-4">{item.jenis}</td>
-                <td className="py-3 px-4">{item.harga}</td>
-                <td className="py-3 px-4">{item.deskripsi}</td>
-                <td className="py-3 px-4">
-                  <img
-                    className="object-contain w-32 h-32"
-                    src={imageURL + item.gambar}
-                    alt={item.gambar}
-                  />
-                </td>
-                <td className="py-3 px-4">
-                  <div className="flex justify-center items-center gap-2">
-                    {/* button edit */}
-                    <button onClick={() => setModalIsOpen(true)}>
-                      <a
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md cursor-pointer"
-                        onClick={() => handleEdit(item)}
-                      >
-                        Edit
-                      </a>
-                    </button>
-                    {/* button delete */}
-                    <button
-                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md cursor-pointer"
-                      onClick={() => handleDelete(item.id_menu)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* button add */}
-        <button onClick={() => setModalIsOpen(true)}>
-          <a
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded-md mt-3 no-underline inline-block"
-            onClick={() => handleAdd()}
+    <div className="flex w-full h-screen">
+      <div className="w-full ">
+        <div className="flex  bg-white z-50 text-white justify-between py-6">
+          <form className="  w-full" onSubmit={(e) => handleSearch(e)}>
+            <input
+              type="search"
+              name="Search"
+              placeholder="Search..."
+              className="w-96 h-12 rounded pl-4 text-sm outline-none bg-white text-neutral-700 border border-gray-400"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button className="bg-teal-500 ml-4 w-24 h-12 rounded">cari</button>
+          </form>
+          <button
+            onClick={() => setModalIsOpen(true, handleAdd())}
+            className="bg-teal-500 w-44 px-4 h-12 rounded"
           >
-            Tambah
-          </a>
-        </button>
+            Add Menu
+          </button>
+        </div>
+        {menus.length ? (
+          <Tabs className="w-full mb-10 h-[85vh] overflow-y-scroll">
+            <TabList className="sticky ">
+              <Tab>Minuman</Tab>
+              <Tab>Makanan</Tab>
+            </TabList>
+            <TabPanel className=" w-full ">
+              <table className="min-w-full h-full divide-y divide-gray-200 ">
+                <thead className="bg-teal-500 text-xs tracking-wider text-white sticky top-0  uppercase text-center   w-full">
+                  <tr>
+                    <th className="px-2 font-medium  py-4">No</th>
+                    <th>Nama Menu</th>
+                    <th>Jenis</th>
+                    <th>Harga</th>
+                    <th>Deskripsi</th>
+                    <th>Gambar</th>
+                    <th className="px-2 font-medium  min-w-[150px] ">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700 text-base">
+                  {menus
+                    .filter((jenis) => jenis.jenis === "minuman")
+                    .map((item, index) => (
+                      <tr key={item.id_menu}>
+                        <td className="px-4">{index + 1}</td>
+                        <td className="px-4">{item.nama_menu}</td>
+                        <td className="px-4">{item.jenis}</td>
+                        <td className="px-4">{item.harga}</td>
+                        <td className="px-4">{item.deskripsi}</td>
+                        <td className="px-4">
+                          <img
+                            className="object-cover w-44 h-32 py-2"
+                            src={imageURL + item.gambar}
+                            alt={item.gambar}
+                          />
+                        </td>
+                        <td className="px-2 flex min-w-[150px] h-full justify-center items-center">
+                          <div>
+                            <button
+                              className="hover:bg-blue-400 text-blue-400 hover:text-white duration-150 ease-out font-bold py-2 px-4 rounded-md cursor-pointer"
+                              onClick={() => {
+                                setModalIsOpen(true);
+                                handleEdit(item);
+                              }}
+                            >
+                              <AiFillEdit />
+                            </button>
+                            <button
+                              className="hover:bg-red-400 text-red-400 hover:text-white duration-150 ease-out font-bold py-2 px-4 rounded-md cursor-pointer"
+                              onClick={() => handleDelete(item.id_menu)}
+                            >
+                              <AiFillDelete />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </TabPanel>
+            <TabPanel className=" w-full ">
+              <table className="min-w-full h-full divide-y divide-gray-200 ">
+                <thead className="bg-teal-500 text-xs tracking-wider text-white sticky top-0  uppercase text-center   w-full">
+                  <tr>
+                    <th className="px-2 font-medium  py-4 max-w-fit ">No</th>
+                    <th>Nama Menu</th>
+                    <th>Jenis</th>
+                    <th>Harga</th>
+                    <th>Deskripsi</th>
+                    <th>Gambar</th>
+                    <th className="px-2 font-medium  min-w-[150px] ">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700 text-base">
+                  {menus.length ? "" : <NoData />}
+                  {menus
+                    .filter((jenis) => jenis.jenis === "makanan")
+                    .map((item, index) => (
+                      <tr key={item.id_menu}>
+                        <td className="px-4">{index + 1}</td>
+                        <td className="px-4">{item.nama_menu}</td>
+                        <td className="px-4">{item.jenis}</td>
+                        <td className="px-4">{item.harga}</td>
+                        <td className="px-4">{item.deskripsi}</td>
+                        <td className="px-4">
+                          <img
+                            className="object-cover w-44 h-32 py-2"
+                            src={imageURL + item.gambar}
+                            alt={item.gambar}
+                          />
+                        </td>
+                        <td className="px-2 flex min-w-[150px] h-full justify-center items-center">
+                          <div>
+                            <button
+                              className="hover:bg-blue-400 text-blue-400 hover:text-white duration-150 ease-out font-bold py-2 px-4 rounded-md cursor-pointer"
+                              onClick={() => {
+                                setModalIsOpen(true);
+                                handleEdit(item);
+                              }}
+                            >
+                              <AiFillEdit />
+                            </button>
+                            <button
+                              className="hover:bg-red-400 text-red-400 hover:text-white duration-150 ease-out font-bold py-2 px-4 rounded-md cursor-pointer"
+                              onClick={() => handleDelete(item.id_menu)}
+                            >
+                              <AiFillDelete />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </TabPanel>
+          </Tabs>
+        ) : (
+          <NoData />
+        )}
+
+        {/* button add */}
       </div>
 
-      {/* create modal form to add or edit member data */}
       <Modal
         isOpen={ModalIsOpen}
         ariaHideApp={false}
         onRequestClose={() => setModalIsOpen(false)}
-        // className="min-w-max min-h-max"
         overlayClassName="modal-overlay"
       >
         <div className="modal-content ">
@@ -254,7 +299,7 @@ function Menu() {
                 <label className="text-sm text-gray-800">Nama</label>
                 <input
                   type="text"
-                  className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-400 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py-2 text-sm  bg-white border border-gray-400 rounded-md focus:border focus:outline-none focus:ring focus:ring-opacity-40"
                   onChange={(e) =>
                     setnewMenu({ ...newMenu, nama_menu: e.target.value })
                   }
@@ -266,7 +311,7 @@ function Menu() {
               <div>
                 <label className="text-sm text-gray-800">Jenis</label>
                 <select
-                  className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-400 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py-2 text-sm  bg-white border border-gray-400 rounded-md focus:border focus:outline-none focus:ring focus:ring-opacity-40"
                   value={newMenu.jenis}
                   onChange={(e) =>
                     setnewMenu({ ...newMenu, jenis: e.target.value })
@@ -285,7 +330,7 @@ function Menu() {
                 <label className="text-sm text-gray-800">Harga</label>
                 <input
                   type="number"
-                  className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-400 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-400 rounded-md focus:border focus:outline-none focus:ring focus:ring-opacity-40"
                   onChange={(e) =>
                     setnewMenu({ ...newMenu, harga: e.target.value })
                   }
@@ -297,7 +342,7 @@ function Menu() {
               <div>
                 <label className="text-sm text-gray-800">Deskripsi</label>
                 <textarea
-                  className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-400 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 h-24"
+                  className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-400 rounded-md focus:border focus:outline-none focus:ring focus:ring-opacity-40 h-24"
                   onChange={(e) =>
                     setnewMenu({ ...newMenu, deskripsi: e.target.value })
                   }
@@ -330,7 +375,7 @@ function Menu() {
               </div>
 
               <button
-                className="btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md no-underline inline-block cursor-pointer"
+                className="btn hover:bg-blue-400 text-blue-400 hover:text-white duration-150 ease-out font-bold py-2 px-4 rounded-md no-underline inline-block cursor-pointer"
                 type="submit"
               >
                 Save
@@ -347,6 +392,6 @@ function Menu() {
       </Modal>
     </div>
   );
-}
+};
 
 export default Menu;

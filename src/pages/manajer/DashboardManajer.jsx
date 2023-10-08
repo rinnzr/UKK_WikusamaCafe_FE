@@ -3,7 +3,6 @@ import { baseURL, config } from "../../config";
 import CardTotalKasirTransaksi from "../../Components/CardTotalKasirTransaksi";
 import axios from "axios";
 import { BiReset } from "react-icons/bi";
-import DataRange from "../../Components/DataRange";
 
 import PieChart from "../../Components/PieChart";
 
@@ -15,13 +14,17 @@ function DashboardManajer() {
   const [endDate, setEndDate] = useState(null);
   const [datases, setDatases] = useState([]);
   const [menus, setMenus] = useState([]);
+  const [namaKasir, setNamaKasir] = useState("");
   const [mejas, setMejas] = useState([]);
-  const [pie, setPie] = useState(false);
 
   useEffect(() => {
     const datass = startDate && endDate ? dataTransaksiFiltered : dataTransaksi;
     setDatases(datass);
   });
+
+  const dataresult = namaKasir
+    ? datases.filter((kasir) => kasir.user.nama_user === namaKasir)
+    : datases;
 
   useEffect(() => {
     getMejas();
@@ -67,7 +70,9 @@ function DashboardManajer() {
     axios
       .get(baseURL + "/user", config)
       .then((response) => {
-        setUserKasir(response.data.data);
+        setUserKasir(
+          response.data.data.filter((role) => role.role === "kasir")
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -84,29 +89,29 @@ function DashboardManajer() {
     setDataTransaksiFiltered(filterData);
   };
 
-  const groupedtransaksi = userKasir
-    .filter((kasir) => kasir.role === "kasir")
-    .reduce((result, kasir) => {
-      const transaksidata = datases.filter(
-        (transaksi) => transaksi.id_user === kasir.id_user
-      );
-      if (transaksidata.length > 0) {
-        result[kasir.nama_user] = {
-          kasir,
-          transaksi: transaksidata,
-        };
-      }
-      return result;
-    }, {});
+  const groupedtransaksi = userKasir.reduce((result, kasir) => {
+    const transaksidata = dataresult.filter(
+      (transaksi) => transaksi.id_user === kasir.id_user
+    );
+    if (transaksidata.length > 0) {
+      result[kasir.nama_user] = {
+        kasir,
+        transaksi: transaksidata,
+      };
+    }
+    return result;
+  }, {});
+
   const handleResetDates = () => {
     setStartDate("");
     setEndDate("");
+    setNamaKasir("");
   };
 
-  const lunas = datases
+  const lunas = dataresult
     .filter((item) => item.status === "lunas")
     .map((item) => item.length);
-  const belum_lunas = datases.filter((item) => item.status !== "lunas");
+  const belum_lunas = dataresult.filter((item) => item.status !== "lunas");
 
   function hitungTotalJumlah(data) {
     let totalJumlah = 0;
@@ -119,7 +124,7 @@ function DashboardManajer() {
   const jumlahMenuLunas = {};
   const jumlahMenubelumlunas = {};
 
-  for (const transaksi of datases) {
+  for (const transaksi of dataresult) {
     for (const detail of transaksi.detail_transaksi) {
       const idMenu = detail.menu.id_menu;
       if (transaksi.status === "lunas") {
@@ -153,21 +158,11 @@ function DashboardManajer() {
   const rangeMinuman = filterAndSortMenu("minuman", jumlahMenuLunas);
   const rangeMakanas = filterAndSortMenu("makanan", jumlahMenubelumlunas);
   const rangeMinumans = filterAndSortMenu("minuman", jumlahMenubelumlunas);
-
   const totalHargaMakanan = calculateTotalHarga(rangeMakanan);
   const totalHargaMinuman = calculateTotalHarga(rangeMinuman);
   const totalHargaMakananbelumLunas = calculateTotalHarga(rangeMakanas);
   const totalHargaMinumanBelumLunas = calculateTotalHarga(rangeMinumans);
-
-  console.log("Range Makanan Lunas:", rangeMakanan);
-  console.log("Range Minuman Lunas:", rangeMinuman);
-  console.log("Total Harga Makanan Lunas:", totalHargaMakanan);
-  console.log("Total Harga Minuman Lunas:", totalHargaMinuman);
-  console.log("Range Makanan Belum Lunas:", rangeMakanas);
-  console.log("Range Minuman Belum Lunas:", rangeMinumans);
-  console.log("Total Harga Makanan Belum Lunas:", totalHargaMakananbelumLunas);
-  console.log("Total Harga Minuman Belum Lunas:", totalHargaMinumanBelumLunas);
-
+  console.log(dataTransaksi);
   return (
     <>
       <div className="w-full overflow-y-scroll px-4 h-screen py-2">
@@ -201,6 +196,20 @@ function DashboardManajer() {
                   >
                     <BiReset className="active:rotate-90 rotate-180 duration-200" />
                   </button>
+
+                  <h1>
+                    <select
+                      value={namaKasir}
+                      onChange={(e) => setNamaKasir(e.target.value)}
+                    >
+                      <option>Pilih kasir</option>
+                      {userKasir.map((kasir) => (
+                        <option value={kasir.nama_user}>
+                          {kasir.nama_user}
+                        </option>
+                      ))}
+                    </select>
+                  </h1>
                   <label htmlFor="dari">Dari</label>
                   <input
                     type="date"
@@ -262,7 +271,7 @@ function DashboardManajer() {
                     <span className="text-xs">meja</span>
                   </p>{" "}
                   <p className="bg-green-400 text-white font-semibold w-full rounded h-16 flex flex-col items-center justify-center">
-                    {userKasir.filter((role) => role.role === "kasir").length}
+                    {userKasir.length}
                     <span className="text-xs">kasir</span>
                   </p>
                   <p className="bg-green-400 text-white font-semibold w-full rounded h-16 flex flex-col items-center justify-center">
@@ -432,3 +441,12 @@ function DashboardManajer() {
 }
 
 export default DashboardManajer;
+
+// console.log("Range Makanan Lunas:", rangeMakanan);
+// console.log("Range Minuman Lunas:", rangeMinuman);
+// console.log("Total Harga Makanan Lunas:", totalHargaMakanan);
+// console.log("Total Harga Minuman Lunas:", totalHargaMinuman);
+// console.log("Range Makanan Belum Lunas:", rangeMakanas);
+// console.log("Range Minuman Belum Lunas:", rangeMinumans);
+// console.log("Total Harga Makanan Belum Lunas:", totalHargaMakananbelumLunas);
+// console.log("Total Harga Minuman Belum Lunas:", totalHargaMinumanBelumLunas);

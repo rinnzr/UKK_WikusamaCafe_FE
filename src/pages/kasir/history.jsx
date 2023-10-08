@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import * as React from "react";
 import axios from "axios";
-import { baseURL, config } from "../../../config";
+import { baseURL, config } from "../../config";
 import { format, parseISO } from "date-fns";
 import Modal from "react-modal";
 import { AiFillCheckSquare, AiOutlineClose } from "react-icons/ai";
 import { BsFillPrinterFill } from "react-icons/bs";
-import PrintButton from "../../../Components/PrintButton";
-import StrukPrint from "./print";
+import StrukPrint from "../../Components/print";
+import PrintButton from "../../Components/PrintButton";
 
-const history = () => {
-  const [transaksi, setTransaksi] = useState([]);
-  const [showPrintModal, setShowPrintModal] = useState(false);
-  const [selectedTransaksi, setSelectedTransaksi] = useState(null);
-  const componentRef = useRef();
+const HistoryTransaction = () => {
+  const [transaksi, setTransaksi] = React.useState([]);
+  const [showPrintModal, setShowPrintModal] = React.useState(false);
+  const [selectedTransaksi, setSelectedTransaksi] = React.useState(null);
+  const componentRef = React.useRef();
 
-  console.log(selectedTransaksi);
-  useEffect(() => {
+  React.useEffect(() => {
     fetchTransaksi();
   }, []);
 
@@ -69,6 +68,9 @@ const history = () => {
           (detailItem) => detailItem.jumlah * detailItem.menu.harga > 0
         )
     );
+  const getOverlayRef = () => {
+    return document.getElementById("my-overlay-element"); // Ganti dengan ID elemen overlay yang sesuai
+  };
 
   const formatISODate = (isoDateString) => {
     const dateObj = parseISO(isoDateString);
@@ -85,43 +87,27 @@ const history = () => {
   };
   return (
     <div className="max-w-full py-0.52">
-      <h1 className="text-3xl  font-semibold text-gray-900 py-3  flex justify-center">
-        History Transaksi &nbsp; {localStorage.getItem("namauser")}
+      <h1 className="text-3xl  font-semibold text-gray-900 py-3  flex justify-between">
+        Transaction HistoryTransaction
+        <span className="text-lg bg-teal-500 text-white p-2">
+          Transaction Count &nbsp;
+          {sortedData.length}
+        </span>
       </h1>
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg max-h-[90vh]  overflow-y-scroll  ">
+      <div className="shadow overflow-hidden border-b border-gray-200  max-h-[90vh]  overflow-y-scroll  ">
         <table className="min-w-full divide-y text-xs divide-gray-200">
-          <thead className="bg-neutral-500 text-[10px] sticky top-0  text-center w-full">
+          <thead className="bg-teal-500 text-[10px] tracking-wider uppercase font-medium sticky top-0 text-white  text-center w-full">
             <tr>
-              <th className="py-3 px-2 text-center  font-medium text-[#FFFF] uppercase max-w-fit tracking-wider">
-                No
-              </th>
-              <th className="py-3 max-w-[4.4rem]  font-medium text-[#FFFF] uppercase tracking-wider">
-                Nama Pelanggan
-              </th>
-              <th className=" py-3 text-center max-w-fit  font-medium text-[#FFFF] uppercase tracking-wider">
-                Chasier
-              </th>
-              <th className="px-2 py-3 font-medium text-[#FFFF] uppercase max-w-fit tracking-wider">
-                Waktu Transaksi
-              </th>
-              <th className="py-3 text-center  font-medium text-[#FFFF]  uppercase max-w-[50px] tracking-wider">
-                No Meja
-              </th>
-              <th className="py-3  font-medium text-[#FFFF] uppercase tracking-wider">
-                Menu & jumlah
-              </th>
-              <th className="py-3 px-2 font-medium text-[#FFFF] uppercase tracking-wider">
-                Harga Satuan
-              </th>
-              <th className="px-6 py-3 font-medium text-[#FFFF] uppercase tracking-wider">
-                Total
-              </th>
-              <th className=" font-medium text-[#FFFF] uppercase tracking-wider">
-                Status Bayar
-              </th>
-              <th className="w-2 py-3 px-2 font-medium text-[#FFFF] uppercase tracking-wider">
-                Struk
-              </th>
+              <th className="py-3 px-2 text-center max-w-fit ">No</th>
+              <th className="py-3 max-w-[4.4rem]">Nama Pelanggan</th>
+              <th className=" py-3 text-center max-w-fit">Chasier</th>
+              <th className="px-2 py-3 max-w-fit ">Waktu Transaksi</th>
+              <th className="py-3 text-center max-w-[50px] ">No Meja</th>
+              <th className="py-3">Menu & jumlah</th>
+              <th className="py-3 px-2">Harga Satuan</th>
+              <th className="px-6 py-3">Total</th>
+              <th>Status Bayar</th>
+              <th className="w-2 py-3 px-2    ">Struk</th>
             </tr>
           </thead>
           <tbody>
@@ -132,31 +118,24 @@ const history = () => {
                   index % 2 === 0 ? "bg-neutral-200 bg-opacity-30" : ""
                 }
               >
-                <td className="py-0.5 text-center ">{index + 1}</td>
-                <td className="py-0.5 max-w-[4rem] truncate text-center">
+                <td className=" text-center ">{index + 1}</td>
+                <td className=" max-w-[4rem] truncate text-center">
                   {item.nama_pelanggan}
                 </td>
-                <td className="py-0.5 text-center ">{item.user.nama_user}</td>
-                <td className="py-0.5 text-center">
-                  <p>{formatISODate(item.updatedAt)}</p>
+                <td className=" text-center ">{item.user.nama_user}</td>
+                <td className=" text-center">
+                  <h1>{formatISODate(item.updatedAt)}</h1>
                 </td>
-                <td className="px-6 py-0.5 text-center">
-                  {item.meja.nomor_meja}
-                </td>
+                <td className="px-6  text-center">{item.meja.nomor_meja}</td>
 
-                <td className="py-0.5">
+                <td className="py-4">
                   <ul>
                     <>
                       {item.detail_transaksi.map(
                         (detailItem) =>
                           detailItem.jumlah !== 0 && (
-                            <li
-                              className="py-0.5"
-                              key={detailItem.id_detail_transaksi}
-                            >
-                              <span className="font-normal">
-                                -{detailItem.menu.nama_menu}
-                              </span>
+                            <li key={detailItem.id_detail_transaksi}>
+                              <span>-{detailItem.menu.nama_menu}</span>
                               {detailItem.jumlah}
                             </li>
                           )
@@ -168,10 +147,7 @@ const history = () => {
                   {item.detail_transaksi.map(
                     (detailItem) =>
                       detailItem.jumlah !== 0 && (
-                        <p
-                          key={detailItem.id_detail_transaksi}
-                          className="py-0.5"
-                        >
+                        <p key={detailItem.id_detail_transaksi}>
                           Rp.
                           {new Intl.NumberFormat("id-ID").format(
                             detailItem.menu.harga
@@ -180,7 +156,7 @@ const history = () => {
                       )
                   )}
                 </td>
-                <td className="px-6 py-0.5">
+                <td className="px-6 ">
                   Rp
                   {new Intl.NumberFormat("id-ID").format(
                     item.detail_transaksi.reduce(
@@ -190,7 +166,7 @@ const history = () => {
                     )
                   )}
                 </td>
-                <td className="max-w-[50px] py-0.5">
+                <td className="max-w-[50px] ">
                   {item.status === "belum_bayar" ? (
                     <button
                       className="bg-red-400 flex items-center gap-4 mx-auto text-white p-1 rounded-sm"
@@ -225,23 +201,23 @@ const history = () => {
           </tbody>
         </table>
       </div>
-
       {/* Modal Print */}
       <Modal
         isOpen={showPrintModal}
-        overlayRef={false}
+        overlayRef={getOverlayRef}
         onRequestClose={() => setShowPrintModal(false)}
         className="w-fit items-center h-full flex flex-col justify-center  border-neutral-600 mx-auto"
       >
-        <div className="mx-auto w-fit bg-white">
+        <div className="overflow-y-scroll  h-[80vh]">
           {selectedTransaksi && (
-            <div
-              id="print-area"
-              className="max-w-xl max-h-[100vh] py-10 overflow-y-scroll"
-            >
-              <StrukPrint item={selectedTransaksi} ref={componentRef} />
-              <PrintButton nama={selectedTransaksi.nama_pelanggan} />
-            </div>
+            <>
+              <div>
+                <PrintButton nama={selectedTransaksi.nama_pelanggan} />
+                <div id="print-area" className="min-h-fit pb-10 bg-white">
+                  <StrukPrint item={selectedTransaksi} ref={componentRef} />
+                </div>
+              </div>
+            </>
           )}
         </div>
       </Modal>
@@ -249,4 +225,4 @@ const history = () => {
   );
 };
 
-export default history;
+export default HistoryTransaction;

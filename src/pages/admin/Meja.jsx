@@ -3,7 +3,6 @@ import $ from "jquery";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-// import Sidebar from "./sidebar";
 
 export default class Meja extends React.Component {
   constructor() {
