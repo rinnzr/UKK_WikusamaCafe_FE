@@ -67,61 +67,61 @@ const TransaksiManajer = () => {
       <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
         Daftar Transaksi
       </h1>
-      <div className="shadow overflow-y-scroll h-[90vh] border-b border-gray-200 sm:rounded-lg">
+      <div className="shadow overflow-y-scroll h-[90vh] border-b border-gray-700 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-yellow-900">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 No
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 Tanggal Transaksi
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 Nama Pelanggan
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 No Meja
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 User
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 Menu
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 Total
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-50 uppercase tracking-wider"
               >
                 Status
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-orange-100 divide-y ">
             {transaksi.map((transaksiItem, index) => (
               <tr key={transaksiItem.id_transaksi}>
                 <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>

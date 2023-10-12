@@ -2,7 +2,7 @@ import React from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-const PrintButton = ({ nama }) => {
+const PrintButton = () => {
   const handlePrint = () => {
     const input = document.getElementById("print-area");
 
@@ -20,7 +20,7 @@ const PrintButton = ({ nama }) => {
 
         pdf.addImage(imgData, "PNG", 20, 40, inputWidth, inputHeight);
 
-        pdf.save(`struk_foodie_coffee_${nama}.pdf`);
+        pdf.save(`Foodie Cafe.pdf`);
         pdf.autoPrint();
         pdf.output("dataurlnewwindow");
       }

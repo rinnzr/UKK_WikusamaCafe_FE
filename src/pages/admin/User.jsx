@@ -4,10 +4,14 @@ import { useState, useEffect } from "react";
 import { config, baseURL, imageURL } from "../../config";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
 
+//functional component (Hooks)
 function User() {
+  //create state member to collect data member from API
   let [users, setUser] = useState([]);
   let [ModalIsOpen, setModalIsOpen] = useState(false);
+  // const url = "http://localhost:8000/menu/"
 
+  //create state newMenu to collect new data member
   let [newUser, setnewUser] = useState([
     {
       id_user: "",
@@ -22,11 +26,13 @@ function User() {
   let [change, setChange] = useState(false); // mannage gambar to show
   let [action, setAction] = useState(""); // mannage action to save
 
+  //manages the side-effects in functional component
   useEffect(() => {
     fetchUser();
   }, []);
 
   const fetchUser = async () => {
+    // get data from API using AXIOS
     try {
       const response = await axios.get(baseURL + "/user", config);
       setUser(response.data.data);
@@ -51,6 +57,7 @@ function User() {
 
   const handleAdd = () => {
     setAction("add"); // save new member
+    //empty form
     setnewUser({
       id_user: "",
       nama_user: "",
@@ -62,6 +69,8 @@ function User() {
 
   const handleEdit = (item) => {
     setAction("edit"); // update old member
+
+    //fill form with previous data based on clicked item
     setnewUser({
       id_user: item.id_user,
       nama_user: item.nama_user,
@@ -74,18 +83,20 @@ function User() {
   const handleDelete = async (id_user) => {
     alert("Are you sure delete this data?");
 
+    // delete data from API using AXIOS
     try {
       const response = await axios.delete(baseURL + "/user/" + id_user, config);
       alert(response.data.message);
     } catch (error) {
       console.error(error);
     }
+    // refresh member data
     fetchUser();
   };
 
   const handleSave = async (e) => {
-    e.preventDefault(); 
-    setChange(false); 
+    e.preventDefault(); // prevent refresh page after sending form data
+    setChange(false); // clear previous update photo status
     
     //prepare data to save
     let paramBody = {
@@ -203,6 +214,7 @@ function User() {
         isOpen={ModalIsOpen}
         ariaHideApp={false}
         onRequestClose={() => setModalIsOpen(false)}
+        
       >
         <h2 className="text-2xl font-semibold leading-tight tracking-wide">
           Edit User

@@ -30,7 +30,7 @@ function DashboardKasir() {
       </div>
       <div className="flex flex-col w-full p-6 lg:w-2/3 md:p-8 lg:p-12">
         <h2 className="text-3xl font-semibold leadi">{user}</h2>
-        <p className="mt-4 mb-8 text-base">Selamat Datang di Foodie Cafe bermacam makanan dan minuman dimulai dari Nusantara sampai ke Western</p>
+        <p className="mt-4 mb-8 text-base">Selamat Datang di Foodie Cafe <span className="font-semibold text-lg text-amber-700 uppercase">Harga Murah Rasa Mewah</span> </p>
         <a href="Tambahtransaksi" className="self-start px-10 py-3 text-lg font-medium rounded-3xl bg-[#331D2C] text-[#EFE1D1]" fdprocessedid="ja8p8">Ayok Pesan!!
         
         </a>

@@ -87,7 +87,7 @@ function LaporanTgl() {
               value="tanggal"
               checked={mode === "tanggal"}
               onChange={() => setMode("tanggal")}
-              className="mr-2 h-6 w-6"
+              className="mr-2 h-4 w-4"
             />
             Tanggal
           </label>
@@ -97,7 +97,7 @@ function LaporanTgl() {
               value="bulan"
               checked={mode === "bulan"}
               onChange={() => setMode("bulan")}
-              className="mr-2 h-6 w-6"
+              className="mr-2 h-4 w-4"
             />
             Bulan
           </label>
@@ -128,11 +128,7 @@ function LaporanTgl() {
         >
           Cari Transaksi
         </button>
-        {dataKosong && (
-          <p className="w-full h-[70vh] items-center flex justify-center ">
-            Data tidak ditemukan
-          </p>
-        )}
+        
         <p className="text-lg  whitespace-nowrap ">
           Pendapatan &nbsp; :
           <span className="bg-red-500 rounded-md py-2 pl-2 pr-12 ml-2 text-gray-50 font-semibold">
@@ -256,7 +252,11 @@ function LaporanTgl() {
           </div>
         </>
       ) : (
-        <p></p>
+        <p>{dataKosong && (
+          <p className="w-full h-[70vh] items-center flex justify-center text-2xl">
+            Data tidak ditemukan
+          </p>
+        )}</p>
       )}
     </div>
   );

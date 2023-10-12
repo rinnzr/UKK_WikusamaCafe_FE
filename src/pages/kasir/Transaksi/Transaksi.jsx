@@ -64,34 +64,6 @@ const StrukPrint = ({ transaksiItem }) => {
           )}
         </span>
       </p>
-      {/* <p className="flex justify-between">
-        PPN 10%:{" "}
-        <span>
-          Rp{new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                total + detailItem.menu.harga * detailItem.jumlah * 0.1,
-              0
-            )
-          )}
-        </span>
-      </p> */}
-
-      {/* <p className="flex justify-between mt-3 font-bold text-lg">
-        Total:{" "}
-        <span>
-          Rp
-          {new Intl.NumberFormat("id-ID").format(
-            transaksiItem.detail_transaksi.reduce(
-              (total, detailItem) =>
-                total +
-                detailItem.menu.harga * detailItem.jumlah * 0.1 +
-                detailItem.menu.harga * detailItem.jumlah,
-              0
-            )
-          )}
-        </span>
-      </p> */}
       <p className="text-center mt-14 text-lg font-semibold">
         Great Day Start With Coffe
       </p>
@@ -128,11 +100,7 @@ const Transaksi = () => {
     } catch (error) {
       console.error(error);
     }
-    // const userDataString = localStorage.getItem('namauser');
-    // const userNameData = JSON.parse(userDataString);
-    // const filteredData = transaksi.filter((item) => item.user.nama_user ===userNameData );
-    // setFilteredData(filteredData);
-  };
+   };
 
   const handleToggleStatus = async (transaksiItem) => {
     const updatedTransaksi = {
@@ -179,7 +147,9 @@ const Transaksi = () => {
     };
     filterData();
   }, [transaksi]);
-
+  const getOverlayRef = () => {
+    return document.getElementById("my-overlay-element");
+  };
   return (
     <div className="max-w-full lg:px-8 h-screen overflow-hidden">
       <h1 className="text-3xl font-semibold text-gray-900 mb-6 flex justify-center">
@@ -336,16 +306,22 @@ const Transaksi = () => {
       >
         <div className="mx-auto w-fit bg-white">
           {selectedTransaksi && (
-            <div id="print-area" className="max-w-xl">
+            <>
+            <div>
+            <div id="print-area" className="min-h-fit pb-10 bg-white">
               <StrukPrint
                 transaksiItem={selectedTransaksi} 
                 ref={componentRef}
               />
-              <PrintButton />
             </div>
+            <PrintButton />
+            </div>
+
+            </>
           )}
         </div>
       </Modal>
+
     </div>
   );
 };
