@@ -1,0 +1,980 @@
+{
+	"info": {
+		"_postman_id": "42d7b0fc-1e2c-41e1-a2a1-ec95aa667752",
+		"name": "Wikusama Cafe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25368106"
+	},
+	"item": [
+		{
+			"name": "meja",
+			"item": [
+				{
+					"name": "menampilkan seluruh meja",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/meja",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"meja"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menampilkan meja yang kosong",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoyLCJuYW1hX3VzZXIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIn0.ZTMlwH3iYbH7P5i3wmoeWZnzEFpDYxsIkbOF57jTmYE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/status/kosong",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"status",
+								"kosong"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menambahkan meja",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoyLCJuYW1hX3VzZXIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIn0.ZTMlwH3iYbH7P5i3wmoeWZnzEFpDYxsIkbOF57jTmYE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nomor_meja\": \"3\",\r\n    \"status\": \"kosong\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/meja",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"meja"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hapus meja",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjo2LCJuYW1hX3VzZXIiOiJkaXNoYSIsInJvbGUiOiJtYW5hamVyIiwidXNlcm5hbWUiOiJkaXNoYSIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTA0LTI4VDEyOjI1OjM5LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTI4VDEyOjI5OjE5LjAwMFoifQ.cqL7VOWlHXbGbZmRk1KXiamxjy50A3uuGPt8cbh6OMg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/meja/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"meja",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjo2LCJuYW1hX3VzZXIiOiJkaXNoYSIsInJvbGUiOiJtYW5hamVyIiwidXNlcm5hbWUiOiJkaXNoYSIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTA0LTI4VDEyOjI1OjM5LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTI4VDEyOjI5OjE5LjAwMFoifQ.cqL7VOWlHXbGbZmRk1KXiamxjy50A3uuGPt8cbh6OMg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nomor_meja\": \"3\",\r\n    \"status\": \"kosong\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/meja/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"meja",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "menu",
+			"item": [
+				{
+					"name": "menambahkan data menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoyLCJuYW1hX3VzZXIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIn0.ZTMlwH3iYbH7P5i3wmoeWZnzEFpDYxsIkbOF57jTmYE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama_menu",
+									"value": "Nasi Kuning",
+									"type": "text"
+								},
+								{
+									"key": "jenis",
+									"value": "makanan",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi",
+									"value": "nasi yang sangat enak",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "12000",
+									"type": "text"
+								},
+								{
+									"key": "gambar",
+									"type": "file",
+									"src": "/C:/Users/orinz/Downloads/es teh.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/menu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mencari data menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"keyword\": \"nasi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/menu/find",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu",
+								"find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mengubah data menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama_menu",
+									"value": "nasi kuning",
+									"type": "text"
+								},
+								{
+									"key": "jenis",
+									"value": "makanan",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi",
+									"value": "nasi yang enak sekali",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "20000",
+									"type": "text"
+								},
+								{
+									"key": "gambar",
+									"type": "file",
+									"src": "/C:/Users/orinz/Downloads/nasi_kuning.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/menu/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menghapus data menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjo2LCJuYW1hX3VzZXIiOiJkaXNoYSIsInJvbGUiOiJtYW5hamVyIiwidXNlcm5hbWUiOiJkaXNoYSIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTA0LTI4VDEyOjI1OjM5LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTI4VDEyOjI5OjE5LjAwMFoifQ.cqL7VOWlHXbGbZmRk1KXiamxjy50A3uuGPt8cbh6OMg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/menu/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tampil menu",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/menu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"menu"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "menambahkan data user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama_user\": \"manajer\",\r\n    \"role\": \"manajer\",\r\n    \"username\": \"manajer\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mencari data user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"keyword\": \"orin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/user/find",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mengubah data user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama_user\": \"Supriyanto\",\r\n    \"role\": \"manajer\",\r\n    \"username\": \"cuplipli\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menghapus data user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJBcnZhIFplbGlxIFByYWR5YXRtYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYXJ2YXplbGlxIiwicGFzc3dvcmQiOiIyNWQ1NWFkMjgzYWE0MDBhZjQ2NGM3NmQ3MTNjMDdhZCIsImNyZWF0ZWRBdCI6IjIwMjMtMDMtMTRUMDI6MjA6MTQuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDMtMTRUMDI6MjA6MTQuMDAwWiJ9.NtY27ovfXV2fW8OCASkW7PQr274n5AUY4OzSVzU6Drg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user/kasir",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"kasir"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaksi",
+			"item": [
+				{
+					"name": "menambahkan data transaksi",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tgl_transaksi\": \"2023-05-20\",\r\n    \"nama_pelanggan\": \"jel\",\r\n    \"id_user\": 1,\r\n    \"id_meja\": 2,\r\n    \"status\": \"lunas\",\r\n    \"detail_transaksi\": [\r\n        {\r\n            \"id_menu\" : 1,\r\n            \"jumlah\" : 1,\r\n            \"harga\" : 0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/transaksi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mengubah data transaksi",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"status\":\"lunas\"\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/transaksi/38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menghapus data transaksi",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menampilkan data transaksi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tampil Tanggal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi/2023-05-23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"2023-05-23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tampil Bulan",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoyLCJuYW1hX3VzZXIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNS0xOVQwNzozMTo0MC4wMDBaIn0.ZTMlwH3iYbH7P5i3wmoeWZnzEFpDYxsIkbOF57jTmYE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tgl_transaksi\": \"2023-05\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/transaksi/bulan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"bulan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJPcmluIFphaGFyYSIsInJvbGUiOiJhZG1pbiIsInVzZXJuYW1lIjoib3JpbiIsInBhc3N3b3JkIjoiMjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQiLCJjcmVhdGVkQXQiOiIyMDIzLTAzLTE0VDAyOjIwOjE0LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTAyVDE0OjM3OjIzLjAwMFoifQ.KJI7gRXccUoUJpBOXWou7aBSKEu24nJ5pzJ9eLQUPtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"lunas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/transaksi/43",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"43"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "menu yg sedikit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi/getmenu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"getmenu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "data sesuai id_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJrYXNpciIsInJvbGUiOiJrYXNpciIsInVzZXJuYW1lIjoia2FzaXIiLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNjo1MDoxOC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNy0yNlQwMjo1Nzo0Mi4wMDBaIn0.RTsBAWeVttTfPlvIr7cEPMLkZRl4Knbd6Fv42QoWPHs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi/user/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"user",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "data sesuai nama_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJrYXNpciIsInJvbGUiOiJrYXNpciIsInVzZXJuYW1lIjoia2FzaXIiLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNjo1MDoxOC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNy0yNlQwMjo1Nzo0Mi4wMDBaIn0.RTsBAWeVttTfPlvIr7cEPMLkZRl4Knbd6Fv42QoWPHs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi/namauser/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"namauser",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pendapatan tgl",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJrYXNpciIsInJvbGUiOiJrYXNpciIsInVzZXJuYW1lIjoia2FzaXIiLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNjo1MDoxOC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNy0yNlQwMjo1Nzo0Mi4wMDBaIn0.RTsBAWeVttTfPlvIr7cEPMLkZRl4Knbd6Fv42QoWPHs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi/pendapatantgl/2023-08-02",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"pendapatantgl",
+								"2023-08-02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pendapatan Bulanan",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxLCJuYW1hX3VzZXIiOiJrYXNpciIsInJvbGUiOiJrYXNpciIsInVzZXJuYW1lIjoia2FzaXIiLCJwYXNzd29yZCI6IjI1ZDU1YWQyODNhYTQwMGFmNDY0Yzc2ZDcxM2MwN2FkIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xOVQwNjo1MDoxOC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNy0yNlQwMjo1Nzo0Mi4wMDBaIn0.RTsBAWeVttTfPlvIr7cEPMLkZRl4Knbd6Fv42QoWPHs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transaksi/pendapatanbln/08",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transaksi",
+								"pendapatanbln",
+								"08"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "authenticatiom",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"kasir\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/auth/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
